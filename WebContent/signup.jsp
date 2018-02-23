@@ -15,7 +15,7 @@
 	</form>
 	
 	<form method="GET">
-		<input type="submit" value="Home" formaction="/tie-novelty-shop/Home" />
+		<input type="submit" value="Home" formaction="/TieNoveltyShop/Home" />
 	</form>
 </body>
 </html>
