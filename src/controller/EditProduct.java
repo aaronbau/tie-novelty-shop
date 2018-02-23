@@ -1,4 +1,4 @@
-
+package controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Validate
+ * Servlet implementation class EditProduct
  */
-@WebServlet("/Validate")
-public class Validate extends HttpServlet {
+@WebServlet("/EditProduct")
+public class EditProduct extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Validate() {
+    public EditProduct() {
         super();
         // TODO Auto-generated constructor stub
     }

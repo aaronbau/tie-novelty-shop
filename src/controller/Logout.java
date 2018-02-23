@@ -34,7 +34,7 @@ public class Logout extends HttpServlet {
 		
 		session.setAttribute("username", null);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/Home");
 		rd.forward(request, response);
 	}
 

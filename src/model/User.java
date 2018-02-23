@@ -2,6 +2,8 @@ package model;
 
 public class User {
 	private String username;
+	private String email;
+	private String password;
 	
 	public User(String username, String email, String password) {
 		super();
@@ -9,8 +11,6 @@ public class User {
 		this.email = email;
 		this.password = password;
 	}
-	private String email;
-	private String password;
 	
 	public String getUsername() {
 		return username;
