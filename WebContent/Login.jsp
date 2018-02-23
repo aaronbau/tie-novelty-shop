@@ -4,14 +4,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Log In</title>
 </head>
 <body>
-<form action="Login" method="GET" >
-	<input type="text" name="username">
-	<input type="password" name="password">
-	<button>Login</button>
-</form>
-
+	<form method="POST">
+		Username: <input type="text" name="username" /> <br>
+		Password: <input type="password" name="password" /> <br>
+		<input type="submit" />
+	</form>
+	
+	<form method="GET">
+		<input type="submit" value="Home" formaction="/tie-novelty-shop/Home" />
+	</form>
 </body>
 </html>
