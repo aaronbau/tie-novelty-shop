@@ -14,6 +14,10 @@ input[type="submit"]:hover, button:hover {
 	cursor: pointer;
 }
 
+img {
+	width: 35vw;
+}
+
 body {
 	margin: 0 10vw 0 10vw;
 }
@@ -28,14 +32,6 @@ body {
 	margin: 5vh 0 0 0;
 }
 
-#login-links {
-	margin-left: auto;
-} 
-
-#search-bar {
-	
-}
-
 .overlay {
 	position: fixed;
 	z-index: 1;
@@ -45,6 +41,14 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
+}
+
+#login-links {
+	margin-left: auto;
+} 
+
+#search-bar {
+	
 }
 
 #signup-element, #login-element {

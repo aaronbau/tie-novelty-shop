@@ -34,12 +34,13 @@
 			%>
 		</div>
 	</div>
+	<div class="product-grid">
 	<%
 		ArrayList<Product> products = (ArrayList<Product>) request.getAttribute("productList");
 		for (Product product : products) {
 	%>
-	<img src="<%out.print(product.getImage());%>" onhover="showName()"
-		onclick="toProduct(<%out.print(product.getName());%>)">
+		<img src="<%out.print(product.getImage());%>" onhover="showName()"
+			onclick="toProduct(<%out.print(product.getName());%>)">
 	<!-- 		<form method='GET'> -->
 	<!-- 			<input type='submit' name='productName' -->
 	<!-- 				formaction='/TieNoveltyShop/ViewProduct' -->
@@ -48,6 +49,8 @@
 	<%
 		}
 	%>
+	</div>
+	
 	<div class="hidden overlay" onclick="hideOverlay()">
 		<div class="hidden" id="signup-element">
 			<%@ include file = "signup.jsp" %>
