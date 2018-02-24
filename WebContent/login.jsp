@@ -4,14 +4,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+
 </head>
 <body>
 <form action="Login" method="GET" >
+	<label for="username">Username</label>
+	<br>
 	<input type="text" name="username">
+	<br>
+	<label for="password">Password</label>
+	<br>
 	<input type="password" name="password">
-	<button>Login</button>
+	<br>
+	<input type="submit">
 </form>
-
 </body>
 </html>

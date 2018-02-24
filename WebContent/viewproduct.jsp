@@ -19,8 +19,8 @@
 	</form>
 	
 	<form method="POST">
-		<input type='submit' value='Edit' formaction="/TieNoveltyShop/EditProduct">
-		<input type='submit' value='Delete' formaction="/TieNoveltyShop/DeleteProduct">
+		<input type='submit' value='Edit' formaction="/tie-novelty-shop/EditProduct">
+		<input type='submit' value='Delete' formaction="/tie-novelty-shop/DeleteProduct">
 	</form>
 </body>
 </html>

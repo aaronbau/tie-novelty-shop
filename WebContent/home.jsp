@@ -7,7 +7,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Home</title>
-<link rel="stylesheet" type="text/css" href="stylesheet.css">
+<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+<script src="js/script.js"></script>
 </head>
 <body>
 	<div class="navbar">
@@ -18,18 +19,14 @@
 			<%
 				if (session.getAttribute("username".toString()) == null) {
 			%>
-			<form>
-				<input style="margin-right: 10px;"
-					formaction="/TieNoveltyShop/Signup" type="submit" value="Sign Up" />
-				<input formaction="/TieNoveltyShop/Login" type="submit"
-					value="Log In" />
-			</form>
+			<button style="margin-right: 10px;" onclick="showSignup()">Sign Up</button>
+			<button onclick="showLogin()">Log In</button>
 			<%
 				} else {
 			%>
 			<span style="margin-right: 10px;"> ${sessionScope.username} </span>
 			<form>
-				<input formaction="/TieNoveltyShop/Logout" type="submit"
+				<input formaction="/tie-novelty-shop/Logout" type="submit"
 					value="Log Out" />
 			</form>
 			<%
@@ -51,5 +48,13 @@
 	<%
 		}
 	%>
+	<div class="hidden overlay" onclick="hideOverlay()">
+		<div class="hidden" id="signup-element">
+			<%@ include file = "signup.jsp" %>
+		</div>
+		<div class="hidden" id="login-element">
+			<%@ include file = "login.jsp" %>
+		</div>
+	</div>
 </body>
 </html>

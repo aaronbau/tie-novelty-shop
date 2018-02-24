@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Sign Up</title>
+
 </head>
 <body>
 	<form method="POST">
@@ -15,7 +15,7 @@
 	</form>
 	
 	<form method="GET">
-		<input type="submit" value="Home" formaction="/TieNoveltyShop/Home" />
+		<input type="submit" value="Home" formaction="/tie-novelty-shop/Home" />
 	</form>
 </body>
 </html>
