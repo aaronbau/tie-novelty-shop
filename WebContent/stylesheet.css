@@ -1,7 +1,13 @@
+input[type="submit"] {
+	
+}
+
 .navbar {
+	display: flex;
 	justify-content: center;
+	margin: 5px 5vw 5px 5vw;
 }
 
 #login-links {
-	display: flex;
-}
+	margin-left: auto;
+} 

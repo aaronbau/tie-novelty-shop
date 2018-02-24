@@ -50,11 +50,11 @@ public class Signup extends HttpServlet {
 		
 		try {
 			db.addUser(u);
-			response.sendRedirect("/tie-novelty-shop/Login");
+			response.sendRedirect("/TieNoveltyShop/Login");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			response.sendRedirect("/tie-novelty-shop/Signup");
+			response.sendRedirect("/TieNoveltyShop/Signup");
 		}
 	}
 
