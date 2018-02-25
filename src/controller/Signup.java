@@ -34,9 +34,9 @@ public class Signup extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-		RequestDispatcher rd = request.getRequestDispatcher("signup.jsp");
-		rd.forward(request, response);
+//		response.getWriter().append("Served at: ").append(request.getContextPath());
+//		RequestDispatcher rd = request.getRequestDispatcher("signup.jsp");
+//		rd.forward(request, response);
 	}
 
 	/**
@@ -50,11 +50,11 @@ public class Signup extends HttpServlet {
 		
 		try {
 			db.addUser(u);
-			response.sendRedirect("/tie-novelty-shop/Login");
+			response.sendRedirect("/tie-novelty-shop/Home");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			response.sendRedirect("/tie-novelty-shop/Signup");
+			response.sendRedirect("/tie-novelty-shop/Home");
 		}
 	}
 

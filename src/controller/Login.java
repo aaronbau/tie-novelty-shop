@@ -34,9 +34,9 @@ public class Login extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-		RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-		rd.forward(request, response);
+//		response.getWriter().append("Served at: ").append(request.getContextPath());
+//		RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+//		rd.forward(request, response);
 	}
 
 	/**
@@ -49,8 +49,8 @@ public class Login extends HttpServlet {
 		try {
 			if(db.login(request.getParameter("username"), request.getParameter("password"))) {
 				HttpSession session = request.getSession();
-				String temp = request.getParameter("username");
-				session.setAttribute("username", temp);
+				String username = request.getParameter("username");
+				session.setAttribute("username", username);
 	
 				response.sendRedirect("/tie-novelty-shop/Home");
 			} else {

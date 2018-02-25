@@ -11,53 +11,16 @@
 <script src="js/script.js"></script>
 </head>
 <body>
-	<div class="navbar">
-		<div id="search-bar">
-			<input type="text" />
-		</div>
-		<div id="login-links">
-			<%
-				if (session.getAttribute("username".toString()) == null) {
-			%>
-			<button style="margin-right: 10px;" onclick="showSignup()">Sign Up</button>
-			<button onclick="showLogin()">Log In</button>
-			<%
-				} else {
-			%>
-			<span style="margin-right: 10px;"> ${sessionScope.username} </span>
-			<form>
-				<input formaction="/tie-novelty-shop/Logout" type="submit"
-					value="Log Out" />
-			</form>
-			<%
-				}
-			%>
-		</div>
-	</div>
-	<div class="product-grid">
-	<%
-		ArrayList<Product> products = (ArrayList<Product>) request.getAttribute("productList");
-		for (Product product : products) {
-	%>
-		<img src="<%out.print(product.getImage());%>" onhover="showName()"
-			onclick="toProduct(<%out.print(product.getName());%>)">
-	<!-- 		<form method='GET'> -->
-	<!-- 			<input type='submit' name='productName' -->
-	<!-- 				formaction='/TieNoveltyShop/ViewProduct' -->
-	<%-- 				value="<%out.print(product.getName() + " - " + product.getPrice());%> "> --%>
-	<!-- 		</form> -->
-	<%
-		}
-	%>
-	</div>
+	<%@ include file="components/navbar.jsp" %>
+	<%@ include file="components/productlisting.jsp" %>
 	
-	<div class="hidden overlay" onclick="hideOverlay()">
-		<div class="hidden" id="signup-element">
-			<%@ include file = "signup.jsp" %>
+	<div class="hidden overlay">
+		<div class="hidden account-forms center" id="login-element">
+			<%@ include file = "components/login.jsp" %>
 		</div>
-		<div class="hidden" id="login-element">
-			<%@ include file = "login.jsp" %>
+		<div class="hidden account-forms center" id="signup-element">
+			<%@ include file = "components/signup.jsp" %>
 		</div>
-	</div>
+	</div>	
 </body>
 </html>
