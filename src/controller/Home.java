@@ -19,7 +19,7 @@ import model.*;
 /**
  * Servlet implementation class Home
  */
-@WebServlet("/Home")
+@WebServlet("/")
 public class Home extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
