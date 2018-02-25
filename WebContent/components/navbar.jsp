@@ -8,7 +8,7 @@
 <body>
 	<div class="navbar">
 		<div id="search-bar">
-			<input type="text" size="30"/>
+			<input type="text" size="30" placeholder="Search"/>
 		</div>
 		<div class="account-buttons">
 			<%
