@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
+import model.Order;
 import model.Product;
 import model.User;
 
@@ -210,5 +211,108 @@ public class DBUtilities {
 				dbConnection.close();
 			}
 		}
+    }
+    
+    public void addToCart(String username, String productname, int quantity) throws SQLException {
+    	Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+    	String query = "INSERT INTO carts"
+				+ "(username, productname, quantity) VALUES"
+				+ "(?,?,?)";
+    	
+    	try {
+			dbConnection = getConnection();
+			preparedStatement = (PreparedStatement) dbConnection.prepareStatement(query);
+
+			preparedStatement.setString(1, username);
+			preparedStatement.setString(2, productname);
+			preparedStatement.setInt(3, quantity);
+
+			// execute insert SQL statement
+			preparedStatement.executeUpdate();
+
+			System.out.println("Record is inserted into carts table!");
+
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+
+		} finally {
+
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
+    }
+    
+    public void removeFromCart(String username, String productname, int quantity) throws SQLException {
+    	Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+    	String query = "DELETE FROM carts where username = ? AND productname = ? AND quantity = ?";
+    	
+    	try {
+			dbConnection = getConnection();
+			preparedStatement = (PreparedStatement) dbConnection.prepareStatement(query);
+
+			preparedStatement.setString(1, username);
+			preparedStatement.setString(2, productname);
+			preparedStatement.setInt(3, quantity);
+			
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+
+		} finally {
+
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
+    }
+    
+    public ArrayList<Order> getArrayListOrders(String username) throws SQLException {
+    	Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+		ArrayList<Order> orders = new ArrayList<Order>();
+    	String query = "SELECT * FROM carts WHERE username = ?";
+    	
+    	try {
+			dbConnection = getConnection();
+			preparedStatement = (PreparedStatement) dbConnection.prepareStatement(query);
+			
+			preparedStatement.setString(1, username);
+
+			// execute insert SQL statement
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			while(rs.next()) {
+				orders.add(new Order(rs.getString("username"), rs.getString("productname"), rs.getInt("quantity")));
+			}
+			
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+
+		} finally {
+
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
+    	
+    	return orders;
     }
 }

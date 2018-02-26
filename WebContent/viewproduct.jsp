@@ -21,6 +21,8 @@
 	<form method="POST">
 		<input type='submit' value='Edit' formaction="/tie-novelty-shop/EditProduct">
 		<input type='submit' value='Delete' formaction="/tie-novelty-shop/DeleteProduct">
+		<input type='number' name='quantity' />
+		<input type='submit' value='Add to Cart' formaction="/tie-novelty-shop/AddToCart">
 	</form>
 </body>
 </html>
