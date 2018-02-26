@@ -9,12 +9,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div class="product-grid">
+	<div class="grid">
 	<%
 		ArrayList<Product> products = (ArrayList<Product>) request.getAttribute("productList");
 		for (Product product : products) {
 	%>
-		<div class="product-image-box" onclick="" style="background-image: url(<% out.print(product.getImage()); %>)">
+		<div class="grid-box" onclick="goToProduct('<%out.print(product.getName());%>')" style="background-image: url(<% out.print(product.getImage()); %>)">
 			<div class="product-name-hover">
 				<span class="product-name center">
 					<%out.print(product.getName());%>
@@ -23,11 +23,14 @@
 					<%out.print(product.getPrice());%>
 				</span>
 			</div>
-		</div>		
+		</div>
 	<%
 		}
 	%>
 	</div>
+	<form id="view-product-form" action="ViewProduct" method="GET">
+		<input type="text" name="productName" id="product-name">
+	</form>
 	
 </body>
 </html>

@@ -16,3 +16,9 @@ function hideOverlay()
 	document.getElementById("signup-element").classList.add("hidden");
 	document.getElementById("login-element").classList.add("hidden");
 }
+
+function goToProduct(productname)
+{
+    document.getElementById("product-name").value = productname;
+    document.getElementById("view-product-form").submit();
+}
