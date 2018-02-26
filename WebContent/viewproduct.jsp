@@ -21,14 +21,10 @@
 	</form>
 	
 	<form method="POST">
-<<<<<<< HEAD
 		<input type='submit' value='Edit' formaction="/tie-novelty-shop/EditProduct">
 		<input type='submit' value='Delete' formaction="/tie-novelty-shop/DeleteProduct">
 		<input type='number' name='quantity' />
 		<input type='submit' value='Add to Cart' formaction="/tie-novelty-shop/AddToCart">
-=======
-		<input type='submit' value='Delete' formaction="/tie-novelty-shop/DeleteProduct">
->>>>>>> Product-Functionality
 	</form>
 </body>
 </html>
