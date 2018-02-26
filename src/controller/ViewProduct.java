@@ -45,7 +45,7 @@ public class ViewProduct extends HttpServlet {
 		session.setAttribute("currentProduct", productInfo[0]);
 		try {
 			Product product = db.getProduct(productInfo[0]);
-			request.setAttribute("product", product);
+			session.setAttribute("product", product);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
