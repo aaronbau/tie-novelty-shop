@@ -15,11 +15,7 @@
 <script src="js/script.js"></script>
 </head>
 <body>
-	<%@ include file="components/navbar.jsp" %>
-<%-- 	<% out.print(product.getName() + " " + product.getDescription() + " " + product.getQuantity() + " " + product.getPrice() + " " + product.getImage());--%>
-
-<%-- 	%> --%>
-	
+	<%@ include file="components/navbar.jsp" %>	
 	<div class="grid">
 		<div class="grid-box">
 			<div class="product-info">
@@ -27,25 +23,39 @@
 					<%out.print(product.getName());%>
 				</div>
 				<br><br>
-				<span class="product-price">
+				<span class="product-price" style="font-size: 1.2em;">
 					<%out.print(product.getQuantity());%>
 				</span>
 				<br><br>
-				<%out.print(product.getDescription());%>
+				<span style="font-size: 1em;">
+					<%out.print(product.getDescription());%>
+				</span>
 				<br><br>
+				<br><br>
+				<% if (session.getAttribute("username") == null) {%>
+				<button id="add-to-cart" onclick="showLogin()">Log In to Add To Cart</button>
+				<% } else { %>
 				<form method="POST">
 					<label for="quantity">Quantity</label>
 					<br>
-					<input style="font-size: 1.2em;" type='number' name='quantity' value=1 max="<%out.print(product.getQuantity()); %>" />
+					<input style="font-size: 1.2em;" type='number' name='quantity' value=1 min=1 max="<%out.print(product.getQuantity()); %>" />
 					<br><br>
 					<input id="add-to-cart" type='submit' value='Add to Cart' formaction="/tie-novelty-shop/AddToCart">
 				</form>
+				<% } %>
 			</div>
 		</div>		
 		<div class="grid-box" style="background-image: url(<% out.print(product.getImage()); %>)">
 		</div>	
 	</div>
-		
+	</div>
+	<div class="hidden overlay">
+		<div class="hidden account-forms center" id="login-element">
+			<%@ include file = "components/login.jsp" %>
+		</div>
+		<div class="hidden account-forms center" id="signup-element">
+			<%@ include file = "components/signup.jsp" %>
+		</div>
 	</div>
 	
 
@@ -60,7 +70,6 @@
 <!-- 		<input type='number' name='quantity' /> -->
 <!-- 		<input type='submit' value='Add to Cart' formaction="/tie-novelty-shop/AddToCart"> -->
 <!-- 	</form> -->
-
 
 </body>
 </html>

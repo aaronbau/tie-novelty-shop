@@ -48,6 +48,9 @@ public class Home extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("currentpage", "Home");
 	
 		RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
 		rd.forward(request, response);

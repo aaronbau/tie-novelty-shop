@@ -52,9 +52,9 @@ public class Login extends HttpServlet {
 				String username = request.getParameter("username");
 				session.setAttribute("username", username);
 	
-				response.sendRedirect("/tie-novelty-shop/Home");
+				response.sendRedirect("/tie-novelty-shop/" + session.getAttribute("currentpage"));
 			} else {
-				response.sendRedirect("/tie-novelty-shop/Login");
+				response.sendRedirect("/tie-novelty-shop/Home");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
