@@ -315,4 +315,79 @@ public class DBUtilities {
     	
     	return orders;
     }
+
+	public void addProduct(Product p) throws SQLException {
+    	Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+    	String query = "INSERT INTO products"
+				+ "(name, description, quantity, price, image) VALUES"
+				+ "(?,?,?,?,?)";
+    	
+    	try {
+			dbConnection = getConnection();
+			preparedStatement = (PreparedStatement) dbConnection.prepareStatement(query);
+
+			preparedStatement.setString(1, p.getName());
+			preparedStatement.setString(2, p.getDescription());
+			preparedStatement.setInt(3, p.getQuantity());
+			preparedStatement.setInt(4, p.getPrice());
+			preparedStatement.setString(5, p.getImage());
+
+			// execute insert SQL statement
+			preparedStatement.executeUpdate();
+
+			System.out.println("Record is inserted into products table!");
+
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+
+		} finally {
+
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
+    }
+    
+    public void editProduct(Product p, String productName) throws SQLException {
+    	Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+    	String query = "UPDATE products SET name = ?, description = ?, quantity = ?, price = ?, image = ?"
+    			+ " WHERE name = ?";
+    	try {
+			dbConnection = getConnection();
+			preparedStatement = (PreparedStatement) dbConnection.prepareStatement(query);
+
+			preparedStatement.setString(1, p.getName());
+			preparedStatement.setString(2, p.getDescription());
+			preparedStatement.setInt(3, p.getQuantity());
+			preparedStatement.setInt(4, p.getPrice());
+			preparedStatement.setString(5, p.getImage());
+			preparedStatement.setString(6, productName);
+		
+			// execute insert SQL statement
+			preparedStatement.executeUpdate();
+
+			System.out.println("Record is edited in products table!");
+
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+
+		} finally {
+
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
+    }
 }
