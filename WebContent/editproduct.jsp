@@ -18,8 +18,11 @@
 		Description: <input type="text" name="description" value="<%=product.getDescription() %>"/> <br>
 		Quantity: <input type="text" name="quantity" value="<%=product.getQuantity() %>"/> <br>
 		Price: <input type="text" name="price" value="<%=product.getPrice() %>"/> <br>
-		Image: <input type="submit" name="image" value="Upload" /> <br>
 		<input type="submit" name="done" />
+	</form>
+	
+	<form method="GET">		
+		<input type="submit" value="Home" formaction="/tie-novelty-shop/Home" />
 	</form>
 </body>
 </html>

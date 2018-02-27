@@ -40,21 +40,15 @@ public class ViewProduct extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		String selectedProduct = request.getParameter("productName");
-		if(selectedProduct != null)
-		{
-			String[] productInfo = selectedProduct.split(",");
-			
-			session.setAttribute("currentProduct", productInfo[0]);
-			try {
-				Product product = db.getProduct(productInfo[0]);
-				session.setAttribute("product", product);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 		
-		session.setAttribute("currentpage", "ViewProduct");
+		session.setAttribute("currentProduct", selectedProduct);
+		try {
+			Product product = db.getProduct(selectedProduct);
+			session.setAttribute("product", product);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		RequestDispatcher rd = request.getRequestDispatcher("viewproduct.jsp");
 		rd.forward(request, response);

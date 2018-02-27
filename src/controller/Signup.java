@@ -46,7 +46,7 @@ public class Signup extends HttpServlet {
 		// TODO Auto-generated method stub
 		DBUtilities db = new DBUtilities();
 		
-		User u = new User(request.getParameter("username").toString(), request.getParameter("email").toString(), request.getParameter 	("password").toString());
+		User u = new User(request.getParameter("username").toString(), request.getParameter("email").toString(), request.getParameter("password").toString());
 		
 		try {
 			db.addUser(u);

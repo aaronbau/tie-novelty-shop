@@ -35,11 +35,8 @@ public class RemoveFromCart extends HttpServlet {
 		HttpSession session = request.getSession();
 		DBUtilities db = new DBUtilities();
 		String username = session.getAttribute("username").toString();
-		String productname = request.getParameter("order");
-		String[] temp = productname.split(",");	
-		String[] temp2 = temp[1].split(" ");
-		productname = temp[0];
-		int quantity = Integer.parseInt(temp2[0]);
+		String productname = request.getParameter("productName").toString();
+		int quantity = Integer.parseInt(request.getParameter("productQuantity"));
 		
 		try {
 			db.removeFromCart(username, productname, quantity);

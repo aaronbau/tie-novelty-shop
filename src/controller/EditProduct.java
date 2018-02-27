@@ -50,11 +50,8 @@ public class EditProduct extends HttpServlet {
 		
 		String productName =  session.getAttribute("currentProduct").toString();
 				
-		Product p = new Product(request.getParameter("name").toString(), request.getParameter("description").toString(), Integer.parseInt(request.getParameter("quantity").toString()),  Integer.parseInt(request.getParameter("price").toString()), null);
-		//Product p = new Product(request.getParameter("name").toString(), "temp", 10, 10, "k");
-		
 		try {
-			db.editProduct(p, productName);
+			db.editProduct(request.getParameter("name").toString(), request.getParameter("description").toString(), Integer.parseInt(request.getParameter("quantity").toString()), Integer.parseInt(request.getParameter("price").toString()), productName);
 			response.sendRedirect("/tie-novelty-shop/Home");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

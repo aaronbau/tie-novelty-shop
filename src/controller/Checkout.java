@@ -1,10 +1,6 @@
 package controller;
 
-
 import java.io.IOException;
-import java.sql.SQLException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,21 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.User;
-
 import dbhelper.DBUtilities;
 
 /**
- * Servlet implementation class Login
+ * Servlet implementation class Checkout
  */
-@WebServlet("/Login")
-public class Login extends HttpServlet {
+@WebServlet("/Checkout")
+public class Checkout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Login() {
+    public Checkout() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,9 +30,7 @@ public class Login extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-//		response.getWriter().append("Served at: ").append(request.getContextPath());
-//		RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-//		rd.forward(request, response);
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -47,23 +39,10 @@ public class Login extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		DBUtilities db = new DBUtilities();
-		User u;
+		HttpSession session = request.getSession();
 		
-		try {
-			u = (User) db.login(request.getParameter("username"), request.getParameter("password"));
-			if(u != null) {
-				HttpSession session = request.getSession();
-				session.setAttribute("username", u.getUsername());
-				session.setAttribute("usertype", u.getType());
-	
-				response.sendRedirect("/tie-novelty-shop/" + session.getAttribute("currentpage"));
-			} else {
-				response.sendRedirect("/tie-novelty-shop/Home");
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		db.Buy(session.getAttribute("username").toString());
+		response.sendRedirect("/tie-novelty-shop/ViewPurchases");
 	}
 
 }

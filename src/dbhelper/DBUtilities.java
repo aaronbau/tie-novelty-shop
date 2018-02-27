@@ -37,8 +37,8 @@ public class DBUtilities {
     	Connection dbConnection = null;
 		PreparedStatement preparedStatement = null;
     	String query = "INSERT INTO users"
-				+ "(username, password, email) VALUES"
-				+ "(?,?,?)";
+				+ "(username, password, email, type) VALUES"
+				+ "(?,?,?,?)";
     	
     	try {
 			dbConnection = getConnection();
@@ -47,6 +47,7 @@ public class DBUtilities {
 			preparedStatement.setString(1, u.getUsername());
 			preparedStatement.setString(2, u.getPassword());
 			preparedStatement.setString(3, u.getEmail());
+			preparedStatement.setString(4, u.getType());
 
 			// execute insert SQL statement
 			preparedStatement.executeUpdate();
@@ -69,10 +70,11 @@ public class DBUtilities {
 		}
     }
     
-    public boolean login(String username, String password) throws SQLException {
+    public User login(String username, String password) throws SQLException {
     	Connection dbConnection = null;
 		PreparedStatement preparedStatement = null;
     	String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+    	User u;
     	
     	try {
 			dbConnection = getConnection();
@@ -86,13 +88,8 @@ public class DBUtilities {
 			int count = 0;
 			
 			while(rs.next()) {
-				count++;
+				return u = new User(rs.getString("username").toString(), rs.getString("email").toString(), rs.getString("password").toString(), rs.getString("type").toString());
 			}
-			
-			if(count > 0) {
-				return true;
-			} else 
-				return false;
 			
 		} catch (SQLException e) {
 
@@ -109,7 +106,7 @@ public class DBUtilities {
 			}
 		}
     	
-    	return false;
+    	return null;
     }
     
     public ArrayList<Product> getArrayListProducts() throws SQLException {
@@ -315,8 +312,8 @@ public class DBUtilities {
     	
     	return orders;
     }
-
-	public void addProduct(Product p) throws SQLException {
+    
+    public void addProduct(Product p) throws SQLException {
     	Connection dbConnection = null;
 		PreparedStatement preparedStatement = null;
     	String query = "INSERT INTO products"
@@ -354,21 +351,20 @@ public class DBUtilities {
 		}
     }
     
-    public void editProduct(Product p, String productName) throws SQLException {
+    public void editProduct(String name, String description, int quantity, int price, String productName) throws SQLException {
     	Connection dbConnection = null;
 		PreparedStatement preparedStatement = null;
-    	String query = "UPDATE products SET name = ?, description = ?, quantity = ?, price = ?, image = ?"
+    	String query = "UPDATE products SET name = ?, description = ?, quantity = ?, price = ?"
     			+ " WHERE name = ?";
     	try {
 			dbConnection = getConnection();
 			preparedStatement = (PreparedStatement) dbConnection.prepareStatement(query);
 
-			preparedStatement.setString(1, p.getName());
-			preparedStatement.setString(2, p.getDescription());
-			preparedStatement.setInt(3, p.getQuantity());
-			preparedStatement.setInt(4, p.getPrice());
-			preparedStatement.setString(5, p.getImage());
-			preparedStatement.setString(6, productName);
+			preparedStatement.setString(1, name);
+			preparedStatement.setString(2, description);
+			preparedStatement.setInt(3, quantity);
+			preparedStatement.setInt(4, price);
+			preparedStatement.setString(5, productName);
 		
 			// execute insert SQL statement
 			preparedStatement.executeUpdate();
@@ -389,5 +385,332 @@ public class DBUtilities {
 				dbConnection.close();
 			}
 		}
+    }
+    
+    public void addToPurchases(Order o) throws SQLException {
+    	Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+    	String query = "INSERT INTO purchases"
+				+ "(username, productname, quantity) VALUES"
+				+ "(?,?,?)";
+    	
+    	try {
+			dbConnection = getConnection();
+			preparedStatement = (PreparedStatement) dbConnection.prepareStatement(query);
+
+			preparedStatement.setString(1, o.getUsername());
+			preparedStatement.setString(2, o.getProductName());
+			preparedStatement.setInt(3, o.getQuantity());
+
+			// execute insert SQL statement
+			preparedStatement.executeUpdate();
+
+			System.out.println("Record is inserted into carts table!");
+
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+
+		} finally {
+
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
+    }
+    
+    public void Buy(String username) {
+    	try {
+			ArrayList<Order> orders = getArrayListOrders(username);
+			
+			for(Order order: orders) {
+				addToPurchases(order);
+				removeFromCart(order.getUsername(), order.getProductName(), order.getQuantity());
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    public ArrayList<Order> getArrayListPurchases(String username) throws SQLException {
+    	Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+		ArrayList<Order> purchases = new ArrayList<Order>();
+    	String query = "SELECT * FROM purchases WHERE username = ?";
+    	
+    	try {
+			dbConnection = getConnection();
+			preparedStatement = (PreparedStatement) dbConnection.prepareStatement(query);
+			
+			preparedStatement.setString(1, username);
+
+			// execute insert SQL statement
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			while(rs.next()) {
+				purchases.add(new Order(rs.getString("username"), rs.getString("productname"), rs.getInt("quantity")));
+			}
+			
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+
+		} finally {
+
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
+    	
+    	return purchases;
+    }
+    
+    public ArrayList<Order> getArrayListPurchases() throws SQLException {
+    	Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+		ArrayList<Order> purchases = new ArrayList<Order>();
+    	String query = "SELECT * FROM purchases";
+    	
+    	try {
+			dbConnection = getConnection();
+			preparedStatement = (PreparedStatement) dbConnection.prepareStatement(query);
+
+			// execute insert SQL statement
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			while(rs.next()) {
+				purchases.add(new Order(rs.getString("username"), rs.getString("productname"), rs.getInt("quantity")));
+			}
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+
+		} finally {
+
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
+    	
+    	return purchases;
+    }
+    
+    public void removeFromPurchases(String username, String productname, int quantity) throws SQLException {
+    	Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+    	String query = "DELETE FROM purchases where username = ? AND productname = ? AND quantity = ?";
+    	
+    	try {
+			dbConnection = getConnection();
+			preparedStatement = (PreparedStatement) dbConnection.prepareStatement(query);
+
+			preparedStatement.setString(1, username);
+			preparedStatement.setString(2, productname);
+			preparedStatement.setInt(3, quantity);
+			
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+
+		} finally {
+
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
+    }
+    
+    public ArrayList<Product> getArrayListSearchProducts(String value) throws SQLException {
+    	Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+		ArrayList<Product> products = new ArrayList<Product>();
+    	String query = "SELECT * FROM products WHERE name LIKE ?";
+    	
+    	try {
+			dbConnection = getConnection();
+			preparedStatement = (PreparedStatement) dbConnection.prepareStatement(query);
+			
+			preparedStatement.setString(1, "%" + value + "%");
+			// execute insert SQL statement
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			while(rs.next()) {
+				products.add(new Product(rs.getString("name"),rs.getString("description"),rs.getInt("quantity"),rs.getInt("price"),rs.getString("image")));
+			}
+			
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+
+		} finally {
+
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
+    	
+    	return products;
+    }
+    
+    public ArrayList<Product> getArrayListAlphabeticalProducts() throws SQLException {
+    	Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+		ArrayList<Product> products = new ArrayList<Product>();
+    	String query = "SELECT * FROM products ORDER BY name";
+    	
+    	try {
+			dbConnection = getConnection();
+			preparedStatement = (PreparedStatement) dbConnection.prepareStatement(query);
+			
+			// execute insert SQL statement
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			while(rs.next()) {
+				products.add(new Product(rs.getString("name"),rs.getString("description"),rs.getInt("quantity"),rs.getInt("price"),rs.getString("image")));
+			}
+			
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+
+		} finally {
+
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
+    	
+    	return products;
+    }
+    
+    public ArrayList<Product> getArrayListReverseAlphabeticalProducts() throws SQLException {
+    	Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+		ArrayList<Product> products = new ArrayList<Product>();
+    	String query = "SELECT * FROM products ORDER BY name desc";
+    	
+    	try {
+			dbConnection = getConnection();
+			preparedStatement = (PreparedStatement) dbConnection.prepareStatement(query);
+			
+			// execute insert SQL statement
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			while(rs.next()) {
+				products.add(new Product(rs.getString("name"),rs.getString("description"),rs.getInt("quantity"),rs.getInt("price"),rs.getString("image")));
+			}
+			
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+
+		} finally {
+
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
+    	
+    	return products;
+    }
+    
+    public ArrayList<Product> getArrayListPriceLowestProducts() throws SQLException {
+    	Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+		ArrayList<Product> products = new ArrayList<Product>();
+    	String query = "SELECT * FROM products ORDER BY price";
+    	
+    	try {
+			dbConnection = getConnection();
+			preparedStatement = (PreparedStatement) dbConnection.prepareStatement(query);
+			
+			// execute insert SQL statement
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			while(rs.next()) {
+				products.add(new Product(rs.getString("name"),rs.getString("description"),rs.getInt("quantity"),rs.getInt("price"),rs.getString("image")));
+			}
+			
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+
+		} finally {
+
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
+    	
+    	return products;
+    }
+    
+    public ArrayList<Product> getArrayListPriceHighestProducts() throws SQLException {
+    	Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+		ArrayList<Product> products = new ArrayList<Product>();
+    	String query = "SELECT * FROM products ORDER BY price desc";
+    	
+    	try {
+			dbConnection = getConnection();
+			preparedStatement = (PreparedStatement) dbConnection.prepareStatement(query);
+			
+			// execute insert SQL statement
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			while(rs.next()) {
+				products.add(new Product(rs.getString("name"),rs.getString("description"),rs.getInt("quantity"),rs.getInt("price"),rs.getString("image")));
+			}
+			
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+
+		} finally {
+
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
+    	
+    	return products;
     }
 }

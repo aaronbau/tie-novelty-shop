@@ -47,7 +47,7 @@ public class DeleteProduct extends HttpServlet {
 
 		try {
 			db.deleteProduct(session.getAttribute("currentProduct").toString());
-			
+				
 			response.sendRedirect("/tie-novelty-shop/Home");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
