@@ -48,22 +48,26 @@ public class Login extends HttpServlet {
 		// TODO Auto-generated method stub
 		DBUtilities db = new DBUtilities();
 		User u;
+		HttpSession session = request.getSession();
 		
 		try {
 			u = (User) db.login(request.getParameter("username"), request.getParameter("password"));
 			if(u != null) {
-				HttpSession session = request.getSession();
 				session.setAttribute("username", u.getUsername());
 				session.setAttribute("usertype", u.getType());
-	
 				response.sendRedirect("/tie-novelty-shop/" + session.getAttribute("currentpage"));
 			} else {
-				response.sendRedirect("/tie-novelty-shop/Home");
+				response.getWriter().write("<script type=\"text/javascript\">");
+				response.getWriter().write("alert('User or password incorrect');");
+				response.getWriter().write("location='" + session.getAttribute("currentpage") + "'");
+				response.getWriter().write("</script>");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}		
+		
 	}
+	
 
 }

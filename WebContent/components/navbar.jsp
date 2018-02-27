@@ -21,6 +21,8 @@
 			%>
 			<span style="margin-right: 10px;">Welcome, ${sessionScope.username}</span>
 			<button onclick="window.location.href='Logout'">Log Out</button>
+			 | 
+			<button onclick="window.location.href='ViewCart'">Cart</button>
 			<%
 				}
 			%>

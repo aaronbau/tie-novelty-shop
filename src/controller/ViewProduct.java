@@ -40,6 +40,7 @@ public class ViewProduct extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		String selectedProduct = request.getParameter("productName");
+		session.setAttribute("currentpage", "ViewProduct");
 		
 		session.setAttribute("currentProduct", selectedProduct);
 		try {

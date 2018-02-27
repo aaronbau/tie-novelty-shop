@@ -134,6 +134,31 @@ body {
 	border: 2px solid #212121;
 }
 
-#search-bar {
-	
+#checkout {
+	color: #eeeeee;
+	background-color: #aaaaaa;
+	font-size: 1.25em;
+	font-weight: 700;
+	padding: 5px;
+	transition-duration: 100ms;
 }
+
+#checkout:hover {
+	color: #ffffff;
+	background-color: #212121;
+}
+
+.cart-item {
+	padding: 10px 15px;
+	border: 1px solid #eeeeee;
+	border-radius: 2px;
+	transition-duration: 100ms;
+	display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cart-item:hover {
+	border-color: #424242;
+}
+

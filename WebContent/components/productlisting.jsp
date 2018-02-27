@@ -31,6 +31,5 @@
 	<form id="view-product-form" action="ViewProduct" method="GET">
 		<input type="text" name="productName" id="product-name">
 	</form>
-	
 </body>
 </html>

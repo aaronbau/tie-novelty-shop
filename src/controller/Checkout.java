@@ -42,6 +42,7 @@ public class Checkout extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		db.Buy(session.getAttribute("username").toString());
+		
 		response.sendRedirect("/tie-novelty-shop/ViewPurchases");
 	}
 

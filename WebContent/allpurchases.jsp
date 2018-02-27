@@ -7,9 +7,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>All Purchases</title>
+<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+<script src="js/script.js"></script>
 </head>
 <body>
-	${sessionScope.username }
+	<%@ include file="components/navbar.jsp" %>	
 	<%
 		if(session.getAttribute("username".toString()) == null) 
 			out.print("<form method='GET'><input type='submit' formaction='/tie-novelty-shop/Login' value='Log In' /><input type='submit' formaction='/tie-novelty-shop/Signup' value='Sign Up' /></form>");
