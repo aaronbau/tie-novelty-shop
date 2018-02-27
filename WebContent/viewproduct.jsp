@@ -21,27 +21,23 @@
 	<div class="grid">
 		<div class="grid-box">
 			<div class="product-info">
-				<div style="padding-top: 10%; font-size: 1.5em;">
-					<%out.print(product.getName());%>
-				</div>
-				<br><br>
+				<h1 style="font-size: 2em;"><%out.print(product.getName());%></h1>
 				<span class="product-price" style="font-size: 1.2em;">
-					<%out.print(product.getQuantity());%>
+					<%out.print(product.getPrice());%>
 				</span>
 				<br><br>
 				<span style="font-size: 1em;">
 					<%out.print(product.getDescription());%>
 				</span>
-				<br><br>
-				<br><br>
+				<br><br><br><br>
 				<% if (session.getAttribute("username") == null) {%>
 				<button id="add-to-cart" onclick="showLogin()">Log In to Add To Cart</button>
 				<% } else { %>
 				<form method="POST">
-					<label for="quantity">Quantity</label>
+					<label for="quantity">Quantity in Stock: <% out.print(product.getQuantity()); %></label>
 					<br>
 					<input style="font-size: 1.2em;" type='number' name='quantity' value=1 min=1 max="<%out.print(product.getQuantity()); %>" />
-					<br><br>
+					<br><br><br><br>
 					<input id="add-to-cart" type='submit' value='Add to Cart' formaction="/tie-novelty-shop/AddToCart">
 				</form>
 				<% } %>

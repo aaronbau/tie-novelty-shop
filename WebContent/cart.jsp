@@ -52,8 +52,8 @@
 			<form style="display: inline;"  method='GET'>
 				<input type='hidden' name='productName' value='<%out.print(order.getProductName());%>' />
 				<input type='hidden' name='productQuantity' value='<%out.print(order.getQuantity());%>' />
-				<button id="remove-from-cart" type='submit' formaction='/tie-novelty-shop/RemoveFromCart'>
-				<img src='assets/garbage.png'> 
+				<button title="Remove from Cart" id="remove-from-cart" type='submit' formaction='/tie-novelty-shop/RemoveFromCart'>
+				<img src='assets/delete.png'> 
 				</button>
 			</form>
 		</div>

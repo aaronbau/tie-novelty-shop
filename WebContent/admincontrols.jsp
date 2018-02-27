@@ -25,38 +25,25 @@
 			</form>
 		</div>
 		<br>
-		<h1 style="font-size: 2em;">Products</h1>
-			<form>
-				<input type="submit" formaction="AddProduct" value="Add Product">
-			</form>
-		<br>
 		<div>
 			<%
 				DBUtilities db = new DBUtilities();
-				ArrayList<Product> products = db.getArrayListAlphabeticalProducts();
+				ArrayList<User> users = db.getArrayListUsers();
 				
-				for(Product p : products)
+				for(User u : users)
 				{
 			%>
 				 <div class="cart-item">
 					<span>
-						<%out.println(p.getName());%>
+						<%out.println(u.getUsername());%>
 					</span>
 					<span>
-						In stock: 
-						<%out.println(p.getQuantity());%>
+						<%out.println(u.getEmail());%>
 					</span>
 					<span>
-						Price:
-						<%out.println(p.getPrice());%>
+						<%out.println(u.getType());%>
 					</span>
-					<form action='/tie-novelty-shop/EditProduct' style="display: inline;"  method='GET'>
-						<input type='hidden' name='product' value='<%out.print(p.getName());%>'>
-						<button type='submit'>
-							<img src='assets/edit.png'> 
-						</button>
-					</form>
-					</div>
+				</div>
 			<%
 				}
 			%>

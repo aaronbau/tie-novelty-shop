@@ -10,7 +10,7 @@
 </head>
 <body>
 <%@ include file="components/navbar.jsp" %>
-<a style="font-size: .80em;" href="AdminControls">back to Admin Controls</a>
+<a style="font-size: .80em;" href="ProductManagerControls">back to Product Manager Controls</a>
 <h1 style="font-size: 2em;">Add New Product</h1>
 	<form method="POST" enctype="multipart/form-data">
 		Name
@@ -25,7 +25,7 @@
 		<br>
 		<input type="text" name="quantity" required/>
 		<br>
-		Price
+		In Stock
 		<br>
 		<input type="text" name="price" required/>
 		<br>

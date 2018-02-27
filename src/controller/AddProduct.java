@@ -56,13 +56,13 @@ public class AddProduct extends HttpServlet {
 		
 		Part part = request.getPart("image");
 		String fileName = extractFileName(part);
-		String savePath = "C:\\Users\\Bau\\Documents\\Eclipse Workspace\\tie-novelty-shop\\WebContent\\resources" + File.separator + fileName;
+		String savePath = "C:\\Users\\patri\\Documents\\GitHub\\tie-novelty-shop\\WebContent\\resources" + File.separator + fileName;
 		File fileSaveDir = new File(savePath);
 		
 		part.write(savePath + File.separator);
 		
 		Product p = new Product(request.getParameter("name").toString(), request.getParameter("description").toString(), 
-				Integer.parseInt(request.getParameter("quantity").toString()),  Integer.parseInt(request.getParameter("price").toString()), savePath);
+				Integer.parseInt(request.getParameter("quantity").toString()),  Integer.parseInt(request.getParameter("price").toString()), "resources/" + fileName);
 		
 		try {
 			db.addProduct(p);

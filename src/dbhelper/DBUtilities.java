@@ -109,6 +109,43 @@ public class DBUtilities {
     	return null;
     }
     
+    public ArrayList<User> getArrayListUsers() throws SQLException {
+    	Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+		ArrayList<User> users = new ArrayList<User>();
+    	String query = "SELECT * FROM users";
+    	
+    	try {
+			dbConnection = getConnection();
+			preparedStatement = (PreparedStatement) dbConnection.prepareStatement(query);
+
+			// execute insert SQL statement
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			while(rs.next()) {
+				users.add(new User(rs.getString("username"),rs.getString("email"),rs.getString("password"),rs.getString("type")));
+			}
+			
+			
+			
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+
+		} finally {
+
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		}
+    	
+    	return users;
+    }
+    
     public ArrayList<Product> getArrayListProducts() throws SQLException {
     	Connection dbConnection = null;
 		PreparedStatement preparedStatement = null;
@@ -351,20 +388,19 @@ public class DBUtilities {
 		}
     }
     
-    public void editProduct(String name, String description, int quantity, int price, String productName) throws SQLException {
+    public void editProduct(String description, int quantity, int price, String productName) throws SQLException {
     	Connection dbConnection = null;
 		PreparedStatement preparedStatement = null;
-    	String query = "UPDATE products SET name = ?, description = ?, quantity = ?, price = ?"
+    	String query = "UPDATE products SET description = ?, quantity = ?, price = ?"
     			+ " WHERE name = ?";
     	try {
 			dbConnection = getConnection();
 			preparedStatement = (PreparedStatement) dbConnection.prepareStatement(query);
 
-			preparedStatement.setString(1, name);
-			preparedStatement.setString(2, description);
-			preparedStatement.setInt(3, quantity);
-			preparedStatement.setInt(4, price);
-			preparedStatement.setString(5, productName);
+			preparedStatement.setString(1, description);
+			preparedStatement.setInt(2, quantity);
+			preparedStatement.setInt(3, price);
+			preparedStatement.setString(4, productName);
 		
 			// execute insert SQL statement
 			preparedStatement.executeUpdate();
@@ -429,11 +465,62 @@ public class DBUtilities {
 			
 			for(Order order: orders) {
 				addToPurchases(order);
+				subtractQuantity(order.getProductName(), order.getQuantity());
 				removeFromCart(order.getUsername(), order.getProductName(), order.getQuantity());
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+    }
+    
+    public void subtractQuantity(String productname, int quantity) {
+    	try {
+			ArrayList<Product> products = getArrayListProducts();
+			
+			for(Product product: products) {
+				if(product.getName().compareToIgnoreCase(productname) == 0) {
+					int temp = product.getQuantity() - quantity;
+					
+					updateProduct(productname, temp);
+				}
+			}			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}    	
+    }
+    
+    public void updateProduct(String productname, int quantity) throws SQLException {
+    	Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+    	String query = "UPDATE products SET quantity = ?"
+    			+ " WHERE name = ?";
+    	try {
+			dbConnection = getConnection();
+			preparedStatement = (PreparedStatement) dbConnection.prepareStatement(query);
+
+			preparedStatement.setInt(1, quantity);
+			preparedStatement.setString(2, productname);
+		
+			// execute insert SQL statement
+			preparedStatement.executeUpdate();
+
+			System.out.println("Record is edited in products table!");
+
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+
+		} finally {
+
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
 		}
     }
     

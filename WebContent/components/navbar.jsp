@@ -8,7 +8,14 @@
 <body>
 	<div class="navbar">
 		<div id="search-bar">
-			<input type="text" size="30" placeholder="Search" />
+			<form action="SearchProducts" method="GET">
+				<input type="text" name="search" size="30" placeholder="Search" value="<%
+					if(session.getAttribute("search") != null)
+					{
+						out.print(session.getAttribute("search").toString());
+					}
+				%>" />
+			</form>
 		</div>
 		<div class="center">
 			<button id="cravate" onclick="window.location.href='Home'">
@@ -29,17 +36,23 @@
 				href="ViewPurchases">${sessionScope.username}</a>
 			</span>
 			<%
-				} else {
+				} else if (session.getAttribute("usertype").equals("Administrator")) {
 			%>
 			<span style="margin-right: 10px;"> Welcome, <a
 				href="AdminControls">${sessionScope.username}</a>
+			</span>
+			<%
+				} else {
+			%>
+			<span style="margin-right: 10px;"> Welcome, <a
+				href="ProductManagerControls">${sessionScope.username}</a>
 			</span>
 			<%
 				}
 			%>
 			<button onclick="window.location.href='Logout'">Log Out</button>
 			|
-			<button onclick="window.location.href='ViewCart'">
+			<button title="View Cart" onclick="window.location.href='ViewCart'">
 				<img src="assets/shopping-cart.png">
 			</button>
 			<%

@@ -9,6 +9,15 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<form action="SearchProducts" method="POST">
+		<select name="filter" onchange="this.form.submit()">
+  			<option value="f1">A-Z</option>
+  			<option value="f2">Z-A</option>
+  			<option value="f3">Lowest Price to Highest Price</option>
+  			<option value="f4">Highest Price to Lowest Price</option>
+		</select>
+	</form>
+	<br>
 	<div class="grid">
 	<%
 		ArrayList<Product> products = (ArrayList<Product>) request.getAttribute("productList");

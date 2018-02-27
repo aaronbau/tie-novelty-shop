@@ -55,7 +55,7 @@ public class Login extends HttpServlet {
 			if(u != null) {
 				session.setAttribute("username", u.getUsername());
 				session.setAttribute("usertype", u.getType());
-				response.sendRedirect("/tie-novelty-shop/" + session.getAttribute("currentpage"));
+				response.sendRedirect("/tie-novelty-shop/Home");
 			} else {
 				response.getWriter().write("<script type=\"text/javascript\">");
 				response.getWriter().write("alert('User or password incorrect');");

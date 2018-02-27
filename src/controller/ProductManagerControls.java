@@ -1,29 +1,25 @@
 package controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import dbhelper.DBUtilities;
-import model.Product;
 
 /**
- * Servlet implementation class DeleteProduct
+ * Servlet implementation class ProductManagerControls
  */
-@WebServlet("/DeleteProduct")
-public class DeleteProduct extends HttpServlet {
+@WebServlet("/ProductManagerControls")
+public class ProductManagerControls extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteProduct() {
+    public ProductManagerControls() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,7 +29,8 @@ public class DeleteProduct extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		RequestDispatcher rd = request.getRequestDispatcher("productmanagercontrols.jsp");
+		rd.forward(request, response);
 	}
 
 	/**
@@ -41,18 +38,7 @@ public class DeleteProduct extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//doGet(request, response);
-		DBUtilities db = new DBUtilities();
-		HttpSession session = request.getSession();
-
-		try {
-			db.deleteProduct(request.getParameter("productname"));
-				
-			response.sendRedirect("/tie-novelty-shop/ProductManagerControls");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		doGet(request, response);
 	}
-	
+
 }

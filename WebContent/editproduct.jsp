@@ -12,7 +12,7 @@
 </head>
 <body>
 	<%@ include file="components/navbar.jsp" %>
-	<a style="font-size: .80em;" href="AdminControls">back to Admin Controls</a>
+	<a style="font-size: .80em;" href="ProductManagerControls">back to Product Manager Controls</a>
 	<br>
 	<br>
 	<% 
@@ -25,13 +25,13 @@
 				<form method="POST">
 					Name
 					<br>
-					<input type="text" name="name" value="<%=product.getName() %>"/>
+					<% out.print(product.getName()); %>
 					<br><br>
 					Description
 					<br>
 					<input type="text" name="description" value="<%=product.getDescription() %>"/> 
 					<br><br>
-					Quantity
+					In Stock
 					<br>
 					<input type="text" name="quantity" value="<%=product.getQuantity() %>"/>
 					<br><br>

@@ -61,7 +61,7 @@ public class EditProduct extends HttpServlet {
 		String productName =  session.getAttribute("currentProduct").toString();
 				
 		try {
-			db.editProduct(request.getParameter("name").toString(), request.getParameter("description").toString(), Integer.parseInt(request.getParameter("quantity").toString()), Integer.parseInt(request.getParameter("price").toString()), productName);
+			db.editProduct(request.getParameter("description").toString(), Integer.parseInt(request.getParameter("quantity").toString()), Integer.parseInt(request.getParameter("price").toString()), productName);
 			response.sendRedirect("/tie-novelty-shop/AdminControls");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
