@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dbhelper.DBUtilities;
 import model.User;
@@ -33,7 +34,8 @@ public class CreateProductManager extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		HttpSession session = request.getSession();
+		session.setAttribute("currentpage", "CreateProductManager");
 		RequestDispatcher rd = request.getRequestDispatcher("createproductmanager.jsp");
 		rd.forward(request, response);
 	}
@@ -44,15 +46,22 @@ public class CreateProductManager extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		DBUtilities db = new DBUtilities();
+		HttpSession session = request.getSession();
 		
 		User u = new User(request.getParameter("username").toString(), request.getParameter("email").toString(), request.getParameter("password").toString(), "Product Manager");
 		
 		try {
 			if(!(u.getUsername() == "" || u.getUsername() == null))	{
 				db.addUser(u);
-				response.sendRedirect("/tie-novelty-shop/Login");
+				response.getWriter().write("<script type=\"text/javascript\">");
+				response.getWriter().write("alert('Product Manager successfully created');");
+				response.getWriter().write("location='AdminControls'");
+				response.getWriter().write("</script>");
 			} else
-				response.sendRedirect("/tie-novelty-shop/CreateProductManager");
+				response.getWriter().write("<script type=\"text/javascript\">");
+			response.getWriter().write("alert('Username already taken');");
+			response.getWriter().write("location='" + session.getAttribute("currentpage") + "'");
+			response.getWriter().write("</script>");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

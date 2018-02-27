@@ -5,15 +5,35 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Add Item</title>
+<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+<script src="js/script.js"></script>
 </head>
 <body>
+<%@ include file="components/navbar.jsp" %>
+<a style="font-size: .80em;" href="AdminControls">back to Admin Controls</a>
+<h1 style="font-size: 2em;">Add New Product</h1>
 	<form method="POST" enctype="multipart/form-data">
-		Name: <input type="text" name="name" /> <br>
-		Description: <input type="text" name="description" /> <br>
-		Quantity: <input type="text" name="quantity" /> <br>
-		Price: <input type="text" name="price" /> <br>
-		Image <input type="file" name="image" value="Choose File" /> <br>
-		<input type="submit" value="Done" formaction="/tie-novelty-shop/AddProduct" />	
+		Name
+		<br>
+		<input type="text" name="name" required/> 
+		<br>
+		Description
+		<br>
+		<input type="text" name="description" required/>
+		<br>
+		Quantity
+		<br>
+		<input type="text" name="quantity" required/>
+		<br>
+		Price
+		<br>
+		<input type="text" name="price" required/>
+		<br>
+		<br>
+		<input type="file" name="image" value="Add Image" required/>
+		<br>
+		<br>
+		<input type="submit" value="Add Product" formaction="/tie-novelty-shop/AddProduct"/>	
 	</form>
 </body>
 </html>

@@ -59,6 +59,10 @@ body {
 	margin-right: auto;
 }
 
+.split-div {
+	diplay: flex;
+}
+
 .close-button {
 	float: right; 
 	margin-top: -5px;
