@@ -46,7 +46,7 @@ public class DeleteProduct extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		try {
-			db.deleteProduct(request.getParameter("productname"));
+			db.deleteProduct(request.getParameter("product").toString());
 				
 			response.sendRedirect("/tie-novelty-shop/ProductManagerControls");
 		} catch (SQLException e) {

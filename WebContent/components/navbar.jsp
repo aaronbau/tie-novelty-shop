@@ -60,5 +60,13 @@
 			%>
 		</div>
 	</div>
+	<div class="hidden overlay">
+		<div class="hidden account-forms center" id="login-element">
+			<%@ include file = "login.jsp" %>
+		</div>
+		<div class="hidden account-forms center" id="signup-element">
+			<%@ include file = "signup.jsp" %>
+		</div>
+	</div>	
 </body>
 </html>

@@ -46,14 +46,6 @@
 		<div class="grid-box" style="background-image: url(<% out.print(product.getImage()); %>)">
 		</div>	
 	</div>
-	<div class="hidden overlay">
-		<div class="hidden account-forms center" id="login-element">
-			<%@ include file = "components/login.jsp" %>
-		</div>
-		<div class="hidden account-forms center" id="signup-element">
-			<%@ include file = "components/signup.jsp" %>
-		</div>
-	</div>
 	
 
 <!-- 	<form method="GET"> -->

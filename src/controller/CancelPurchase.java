@@ -37,7 +37,7 @@ public class CancelPurchase extends HttpServlet {
 		DBUtilities db = new DBUtilities();
 		String username = request.getParameter("username").toString();
 		String productname = request.getParameter("productName").toString();
-		int quantity = Integer.parseInt(request.getParameter("productQuantity"));
+		int quantity = Integer.parseInt(request.getParameter("productQuantity").toString());
 		
 		try {
 			db.removeFromPurchases(username, productname, quantity);

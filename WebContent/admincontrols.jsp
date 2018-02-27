@@ -23,6 +23,10 @@
 				<input type="submit" formaction="CreateProductManager"
 					value="Create Product Manager">
 			</form>
+			<form>
+				<input type="submit" formaction="AllPurchases"
+					value="View All Purchases">
+			</form>
 		</div>
 		<br>
 		<div>
