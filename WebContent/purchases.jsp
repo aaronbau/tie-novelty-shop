@@ -26,13 +26,13 @@
 		{
 			%>
 			<h1 style="font-size: 2em;" align="center">No items purchased yet.</h1>
-			<% 
-		} else {
-		
+		<% } else { %>
+			<h1 style="font-size: 2em;" align="center">Purchases</h1>
+		<% 
 		for(Order order: purchases) {
 			Product p = db.getProduct(order.getProductName());
 			double totalPrice = p.getPrice() * order.getQuantity();
-	%>
+		%>
 		<div class="cart-item">
 			<span>
 				<%out.println(order.getProductName());%>

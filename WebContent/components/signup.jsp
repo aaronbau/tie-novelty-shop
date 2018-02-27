@@ -9,7 +9,7 @@
 	<div class="center">
 		<button class="close-button" onclick="hideOverlay()">X</button>
 		<div style="text-align: center;">
-			Sign-up for CRAVATE
+			Sign-up for Cravate
 		</div>
 		<br> 
 		<form action="Signup" method="POST">

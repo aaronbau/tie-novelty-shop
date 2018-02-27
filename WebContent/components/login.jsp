@@ -11,7 +11,7 @@
 <div class="center">
 	<button class="close-button" onclick="hideOverlay()">X</button>
 	<div style="text-align: center;">
-		Log-in to CRAVATE
+		Log-in to Cravate
 	</div>
 	<br>
 	<form action="Login" method="POST" >

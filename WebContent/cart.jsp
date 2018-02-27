@@ -12,7 +12,6 @@
 <body>
 <%@ include file="components/navbar.jsp" %>
 	<a style="font-size: .80em;" href="Home">back to Home</a>
-	<br><br>
 	<%
 // 		if(session.getAttribute("username".toString()) == null) 
 // 			out.print("<form method='GET'><input type='submit' formaction='/tie-novelty-shop/Login' value='Log In' /><input type='submit' formaction='/tie-novelty-shop/Signup' value='Sign Up' /></form>");
@@ -22,16 +21,21 @@
 		ArrayList<Order> orders = (ArrayList<Order>) session.getAttribute("cart");
 		DBUtilities db = new DBUtilities();
 		
+		double totalTotalPrice = 0;
+		
 		if(orders.size() == 0)
 		{
 			%>
 			<h1 style="font-size: 2em;" align="center">No items in cart.</h1>
 			<% 
-		} else {
+		} else { %>
+			<h1 style="font-size: 2em;" align="center">Cart</h1>
+		<%
 			
 		for(Order order: orders) {
 			Product p = db.getProduct(order.getProductName());
 			double totalPrice = p.getPrice() * order.getQuantity();
+			totalTotalPrice += totalPrice;
 	%>
 		<div class="cart-item">
 			<span>
@@ -51,12 +55,8 @@
 				<input type='submit' formaction='/tie-novelty-shop/RemoveFromCart' value='Remove from Cart' />
 			</form>
 		</div>
-		<br>
-	Total:
-	<br>
-	<form style="float: right;"method="POST">
-		<input id="checkout" type='submit' value='Checkout' formaction="/tie-novelty-shop/Checkout">
-	</form>
+		
+	
 <!-- 			out.println("<form method='GET'>"); -->
 <!-- 			out.println("<input type='hidden' name='productName' value='"+ order.getProductName() +"' />"); -->
 <!-- 			out.println("<input type='hidden' name='productQuantity' value='"+ order.getQuantity() +"' />"); -->
@@ -64,7 +64,16 @@
 <!-- 			out.println("<input type='submit' formaction='/tie-novelty-shop/RemoveFromCart' value='Remove from Cart' />"); -->
 <!-- 			out.println("</form>"); -->
 	<%
-		} }
+		} 
+	%>
+	<br>
+		Total: <%out.println(totalTotalPrice); %>
+	<br>
+	<form style="float: right;"method="POST">
+		<input id="checkout" type='submit' value='Checkout' formaction="/tie-novelty-shop/Checkout">
+	</form>
+	<%
+		}
 	%>
 	
 	

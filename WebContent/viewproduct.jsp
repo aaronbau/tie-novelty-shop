@@ -16,6 +16,8 @@
 </head>
 <body>
 	<%@ include file="components/navbar.jsp" %>	
+	<a style="font-size: .80em;" href="Home">back to Home</a>
+	<br><br>
 	<div class="grid">
 		<div class="grid-box">
 			<div class="product-info">
@@ -47,7 +49,6 @@
 		</div>		
 		<div class="grid-box" style="background-image: url(<% out.print(product.getImage()); %>)">
 		</div>	
-	</div>
 	</div>
 	<div class="hidden overlay">
 		<div class="hidden account-forms center" id="login-element">

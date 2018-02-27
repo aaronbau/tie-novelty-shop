@@ -10,6 +10,11 @@
 		<div id="search-bar">
 			<input type="text" size="30" placeholder="Search"/>
 		</div>
+		<div class="center">
+			<button id="cravate" onclick="window.location.href='Home'">
+				Cravate
+			</button>
+		</div>
 		<div class="account-buttons">
 			<%
 				if (session.getAttribute("username") == null) {
@@ -19,7 +24,10 @@
 			<%
 				} else {
 			%>
-			<span style="margin-right: 10px;">Welcome, ${sessionScope.username}</span>
+			<span style="margin-right: 10px;">
+				Welcome,
+				<a href="ViewPurchases">${sessionScope.username}</a>
+			</span>
 			<button onclick="window.location.href='Logout'">Log Out</button>
 			 | 
 			<button onclick="window.location.href='ViewCart'">Cart</button>
