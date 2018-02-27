@@ -11,19 +11,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dbhelper.DBUtilities;
-import model.Product;
 
 /**
- * Servlet implementation class DeleteProduct
+ * Servlet implementation class CancelPurchase
  */
-@WebServlet("/DeleteProduct")
-public class DeleteProduct extends HttpServlet {
+@WebServlet("/CancelPurchase")
+public class CancelPurchase extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteProduct() {
+    public CancelPurchase() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,6 +33,19 @@ public class DeleteProduct extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+		HttpSession session = request.getSession();
+		DBUtilities db = new DBUtilities();
+		String username = request.getParameter("username").toString();
+		String productname = request.getParameter("productName").toString();
+		int quantity = Integer.parseInt(request.getParameter("productQuantity"));
+		
+		try {
+			db.removeFromPurchases(username, productname, quantity);
+			response.sendRedirect("/tie-novelty-shop/AllPurchases");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -41,18 +53,7 @@ public class DeleteProduct extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//doGet(request, response);
-		DBUtilities db = new DBUtilities();
-		HttpSession session = request.getSession();
-
-		try {
-			db.deleteProduct(session.getAttribute("currentProduct").toString());
-				
-			response.sendRedirect("/tie-novelty-shop/Home");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		doGet(request, response);
 	}
-	
+
 }

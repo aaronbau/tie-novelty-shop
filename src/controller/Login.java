@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.User;
+
 import dbhelper.DBUtilities;
 
 /**
@@ -45,12 +47,14 @@ public class Login extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		DBUtilities db = new DBUtilities();
+		User u;
 		
 		try {
-			if(db.login(request.getParameter("username"), request.getParameter("password"))) {
+			u = (User) db.login(request.getParameter("username"), request.getParameter("password"));
+			if(u != null) {
 				HttpSession session = request.getSession();
-				String temp = request.getParameter("username");
-				session.setAttribute("username", temp);
+				session.setAttribute("username", u.getUsername());
+				session.setAttribute("usertype", u.getType());
 	
 				response.sendRedirect("/tie-novelty-shop/Home");
 			} else {

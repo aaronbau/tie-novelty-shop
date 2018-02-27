@@ -32,7 +32,7 @@ public class Logout extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		
-		session.setAttribute("username", null);
+		session.invalidate();
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/Home");
 		rd.forward(request, response);

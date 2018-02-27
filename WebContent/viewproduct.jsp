@@ -10,17 +10,20 @@
 </head>
 <body>
 	<%
-		Product product = (Product) request.getAttribute("product");
+		Product product = (Product) session.getAttribute("product");
 		
 		out.print(product.getName() + " " + product.getDescription() + " " + product.getQuantity() + " " + product.getPrice() + " " + product.getImage());
 	%>
 	<form method="GET">
 		<input type="submit" value="Home" formaction="/tie-novelty-shop/Home" />
+		<input type='submit' value='Edit' formaction="/tie-novelty-shop/EditProduct">
 	</form>
 	
 	<form method="POST">
-		<input type='submit' value='Edit' formaction="/TieNoveltyShop/EditProduct">
-		<input type='submit' value='Delete' formaction="/TieNoveltyShop/DeleteProduct">
+		
+		<input type='submit' value='Delete' formaction="/tie-novelty-shop/DeleteProduct">
+		<input type='number' name='quantity' value="1" />
+		<input type='submit' value='Add to Cart' formaction="/tie-novelty-shop/AddToCart">
 	</form>
 </body>
 </html>

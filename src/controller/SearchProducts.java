@@ -1,6 +1,5 @@
 package controller;
 
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,22 +10,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import dbhelper.DBUtilities;
-import model.*;
+import model.Product;
 
 /**
- * Servlet implementation class Home
+ * Servlet implementation class SearchProducts
  */
-@WebServlet("/")
-public class Home extends HttpServlet {
+@WebServlet("/SearchProducts")
+public class SearchProducts extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Home() {
+    public SearchProducts() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,13 +34,14 @@ public class Home extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());		
-
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		DBUtilities db = new DBUtilities();
 		ArrayList<Product> products;
 		
+		String searchValue = request.getParameter("search").toString();
+		
 		try {
-			products = db.getArrayListProducts();			
+			products = db.getArrayListSearchProducts(searchValue);			
 			request.setAttribute("productList", products);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -53,13 +52,37 @@ public class Home extends HttpServlet {
 		rd.forward(request, response);
 	}
 
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		//doGet(request, response);
+		DBUtilities db = new DBUtilities();
+		ArrayList<Product> products = new ArrayList<>();
+		
+		String filterValue = request.getParameter("filter").toString();
+		
+		System.out.println(filterValue);
+		
+		try {
+			if(filterValue.equalsIgnoreCase("f1"))
+				products = db.getArrayListAlphabeticalProducts();
+			else if(filterValue.equalsIgnoreCase("f2"))
+				products = db.getArrayListReverseAlphabeticalProducts();
+			else if(filterValue.equalsIgnoreCase("f3"))
+				products = db.getArrayListPriceLowestProducts();
+			else if(filterValue.equalsIgnoreCase("f4"))
+				products = db.getArrayListPriceHighestProducts();
+			
+			request.setAttribute("productList", products);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+		rd.forward(request, response);
 	}
 
 }

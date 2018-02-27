@@ -3,27 +3,27 @@ package controller;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import dbhelper.DBUtilities;
-import model.Product;
+import model.User;
 
 /**
- * Servlet implementation class DeleteProduct
+ * Servlet implementation class CreateProductManager
  */
-@WebServlet("/DeleteProduct")
-public class DeleteProduct extends HttpServlet {
+@WebServlet("/CreateProductManager")
+public class CreateProductManager extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteProduct() {
+    public CreateProductManager() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,6 +34,8 @@ public class DeleteProduct extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+		RequestDispatcher rd = request.getRequestDispatcher("createproductmanager.jsp");
+		rd.forward(request, response);
 	}
 
 	/**
@@ -41,18 +43,21 @@ public class DeleteProduct extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//doGet(request, response);
 		DBUtilities db = new DBUtilities();
-		HttpSession session = request.getSession();
-
+		
+		User u = new User(request.getParameter("username").toString(), request.getParameter("email").toString(), request.getParameter("password").toString(), "Product Manager");
+		
 		try {
-			db.deleteProduct(session.getAttribute("currentProduct").toString());
-				
-			response.sendRedirect("/tie-novelty-shop/Home");
+			if(!(u.getUsername() == "" || u.getUsername() == null))	{
+				db.addUser(u);
+				response.sendRedirect("/tie-novelty-shop/Login");
+			} else
+				response.sendRedirect("/tie-novelty-shop/CreateProductManager");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			response.sendRedirect("/tie-novelty-shop/Home");
 		}
 	}
-	
+
 }
