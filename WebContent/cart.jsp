@@ -29,7 +29,7 @@
 			<h1 style="font-size: 2em;" align="center">No items in cart.</h1>
 			<% 
 		} else { %>
-			<h1 style="font-size: 2em;" align="center">Cart</h1>
+			<h1 style="font-size: 2em;">Cart</h1>
 		<%
 			
 		for(Order order: orders) {
@@ -52,7 +52,9 @@
 			<form style="display: inline;"  method='GET'>
 				<input type='hidden' name='productName' value='<%out.print(order.getProductName());%>' />
 				<input type='hidden' name='productQuantity' value='<%out.print(order.getQuantity());%>' />
-				<input type='submit' formaction='/tie-novelty-shop/RemoveFromCart' value='Remove from Cart' />
+				<button id="remove-from-cart" type='submit' formaction='/tie-novelty-shop/RemoveFromCart'>
+				<img src='assets/garbage.png'> 
+				</button>
 			</form>
 		</div>
 		

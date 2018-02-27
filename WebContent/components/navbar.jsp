@@ -30,7 +30,8 @@
 			</span>
 			<button onclick="window.location.href='Logout'">Log Out</button>
 			 | 
-			<button onclick="window.location.href='ViewCart'">Cart</button>
+			<button onclick="window.location.href='ViewCart'"><img src="assets/shopping-cart.png">
+			</button>
 			<%
 				}
 			%>

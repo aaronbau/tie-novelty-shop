@@ -40,7 +40,7 @@ public class RemoveFromCart extends HttpServlet {
 		
 		try {
 			db.removeFromCart(username, productname, quantity);
-			response.sendRedirect("/tie-novelty-shop/Home");
+			response.sendRedirect("/tie-novelty-shop/" + session.getAttribute("currentPage"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -65,6 +65,10 @@ body {
 	font-family: Sans-serif;
 }
 
+#remove-from-cart:hover {
+	background-color: #ffcccc;
+}
+
 .hidden {
 	display: none;
 }

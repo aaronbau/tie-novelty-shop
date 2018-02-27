@@ -41,6 +41,7 @@ public class ViewCart extends HttpServlet {
 		HttpSession session = request.getSession();
 		String username = session.getAttribute("username").toString();
 		
+		session.setAttribute("currentpage", "ViewCart");
 		try {
 			orders = db.getArrayListOrders(username);			
 			session.setAttribute("cart", orders);
