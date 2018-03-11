@@ -40,12 +40,12 @@ public class ViewProduct extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		String selectedProduct = request.getParameter("productName");
-		String[] productInfo = selectedProduct.split(",");
+		session.setAttribute("currentpage", "ViewProduct");
 		
-		session.setAttribute("currentProduct", productInfo[0]);
+		session.setAttribute("currentProduct", selectedProduct);
 		try {
-			Product product = db.getProduct(productInfo[0]);
-			request.setAttribute("product", product);
+			Product product = db.getProduct(selectedProduct);
+			session.setAttribute("product", product);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

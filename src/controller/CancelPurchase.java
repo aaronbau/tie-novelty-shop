@@ -1,11 +1,8 @@
 package controller;
 
-
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,19 +11,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dbhelper.DBUtilities;
-import model.*;
 
 /**
- * Servlet implementation class Home
+ * Servlet implementation class CancelPurchase
  */
-@WebServlet("/Home")
-public class Home extends HttpServlet {
+@WebServlet("/CancelPurchase")
+public class CancelPurchase extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Home() {
+    public CancelPurchase() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,26 +32,21 @@ public class Home extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());		
-
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+		HttpSession session = request.getSession();
 		DBUtilities db = new DBUtilities();
-		ArrayList<Product> products;
+		String username = request.getParameter("username").toString();
+		String productname = request.getParameter("productName").toString();
+		int quantity = Integer.parseInt(request.getParameter("productQuantity").toString());
 		
 		try {
-			products = db.getArrayListProducts();			
-			request.setAttribute("productList", products);
+			db.removeFromPurchases(username, productname, quantity);
+			response.sendRedirect("/tie-novelty-shop/AllPurchases");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		HttpSession session = request.getSession();
-		session.setAttribute("currentpage", "Home");
-	
-		RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
-		rd.forward(request, response);
 	}
-
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

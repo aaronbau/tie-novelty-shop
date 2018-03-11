@@ -4,14 +4,30 @@ public class User {
 	private String username;
 	private String email;
 	private String password;
+	private String type;
 	
 	public User(String username, String email, String password) {
 		super();
 		this.username = username;
 		this.email = email;
 		this.password = password;
+		this.type = "User";
 	}
 	
+	public User(String username, String email, String password, String type) {
+		super();
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.type = type;
+	}
+	
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}	
 	public String getUsername() {
 		return username;
 	}

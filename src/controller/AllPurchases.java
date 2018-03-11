@@ -1,6 +1,5 @@
 package controller;
 
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,19 +13,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dbhelper.DBUtilities;
-import model.*;
+import model.Order;
 
 /**
- * Servlet implementation class Home
+ * Servlet implementation class AllPurchases
  */
-@WebServlet("/Home")
-public class Home extends HttpServlet {
+@WebServlet("/AllPurchases")
+public class AllPurchases extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Home() {
+    public AllPurchases() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,26 +35,22 @@ public class Home extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());		
-
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 		DBUtilities db = new DBUtilities();
-		ArrayList<Product> products;
+		ArrayList<Order> orders;
+		HttpSession session = request.getSession();
 		
 		try {
-			products = db.getArrayListProducts();			
-			request.setAttribute("productList", products);
+			orders = db.getArrayListPurchases();			
+			session.setAttribute("allpurchases", orders);
+			
+			RequestDispatcher rd = request.getRequestDispatcher("allpurchases.jsp");
+			rd.forward(request, response);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		HttpSession session = request.getSession();
-		session.setAttribute("currentpage", "Home");
-	
-		RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
-		rd.forward(request, response);
 	}
-
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

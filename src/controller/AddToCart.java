@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,19 +12,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dbhelper.DBUtilities;
-import model.Product;
 
 /**
- * Servlet implementation class DeleteProduct
+ * Servlet implementation class AddToCart
  */
-@WebServlet("/DeleteProduct")
-public class DeleteProduct extends HttpServlet {
+@WebServlet("/AddToCart")
+public class AddToCart extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteProduct() {
+    public AddToCart() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,18 +41,21 @@ public class DeleteProduct extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//doGet(request, response);
-		DBUtilities db = new DBUtilities();
 		HttpSession session = request.getSession();
-
+		int quantity = Integer.parseInt(request.getParameter("quantity"));
+		String username = session.getAttribute("username").toString();
+		String productname = session.getAttribute("currentProduct").toString();
+		DBUtilities db = new DBUtilities();
+		
 		try {
-			db.deleteProduct(request.getParameter("product").toString());
-				
-			response.sendRedirect("/tie-novelty-shop/ProductManagerControls");
+			db.addToCart(username, productname, quantity);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/Home");
+		rd.forward(request, response);
 	}
-	
+
 }
