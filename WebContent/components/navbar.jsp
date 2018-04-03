@@ -9,12 +9,7 @@
 	<div class="navbar">
 		<div id="search-bar">
 			<form action="SearchProducts" method="GET">
-				<input type="text" name="search" size="30" placeholder="Search" value="<%
-					if(session.getAttribute("search") != null)
-					{
-						out.print(session.getAttribute("search").toString());
-					}
-				%>" />
+				<input type="text" name="search" size="30" placeholder="Search" />
 			</form>
 		</div>
 		<div class="center">

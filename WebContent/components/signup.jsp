@@ -4,6 +4,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/signup.js"></script>
 </head>
 <body>
 	<div class="center">
@@ -12,7 +14,7 @@
 			Sign-up for Cravate
 		</div>
 		<br> 
-		<form action="Signup" method="POST">
+		<form id="signup" action="Signup" method="POST">
 			<label for="username">Username</label> 
 			<br> 
 			<input type="text" name="username" required/> 
@@ -26,8 +28,8 @@
 			<input type="email" name="email" required/>
 			<br>
 			<br>
-			<input type="submit" value="Sign-up"/>
 		</form>
+		<button id="signup-button">Sign-up</button>
 	</div>
 </body>
 </html>
