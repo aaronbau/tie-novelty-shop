@@ -29,6 +29,7 @@
 			<br>
 			<br>
 		</form>
+		<div id="error"></div>
 		<button id="signup-button">Sign-up</button>
 	</div>
 </body>

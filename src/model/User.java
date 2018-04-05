@@ -7,15 +7,10 @@ public class User {
 	private String type;
 	
 	public User(String username, String email, String password) {
-		super();
-		this.username = username;
-		this.email = email;
-		this.password = password;
-		this.type = "User";
+		this(username, email, password, "User");
 	}
 	
 	public User(String username, String email, String password, String type) {
-		super();
 		this.username = username;
 		this.email = email;
 		this.password = password;

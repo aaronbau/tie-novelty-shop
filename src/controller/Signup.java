@@ -11,9 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import dbhelper.DBUtilities;
+import dbhelper.UserHelper;
 import model.User;
 
 /**
@@ -46,23 +45,23 @@ public class Signup extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-//		request.getParameter("username").toString();
+		String username = request.getParameter("username").toString();
+		String email = request.getParameter("email").toString();
+		String password = request.getParameter("email").toString();
 		
-//		DBUtilities db = new DBUtilities();
-//		
-//		User u = new User(request.getParameter("username").toString(), request.getParameter("email").toString(), request.getParameter("password").toString());
+		UserHelper helper = new UserHelper();
 		
-//		try {
-//			db.addUser(u);
-//			
-//			
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			response.sendRedirect("/tie-novelty-shop/Home");
-//		}
-		System.out.println("TRIGGERED");
-		response.getWriter().write("{type:success}");
+		User u = new User(username, email, password);
+		
+		try {
+			helper.addUser(u);
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			response.sendRedirect("/tie-novelty-shop/Home");
+		}
 	}
 
 }

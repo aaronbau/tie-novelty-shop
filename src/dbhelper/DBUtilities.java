@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
 
 import model.Order;
 import model.Product;
@@ -14,24 +13,23 @@ import model.User;
 public class DBUtilities {
 	private final String host = "jdbc:mysql://localhost:3306/tie-novelty-shop";
     private final String user = "root";
-    private final String pass = "password";
+    private final String password = "password";
     
-    public Connection getConnection(){    
-        //Connection Establishment
-        try
-            {
-                Class.forName("com.mysql.jdbc.Driver");
-                System.out.println("Connecting to database...");
-                Connection con = (Connection) DriverManager.getConnection(host, user, pass);
-                System.out.println("Connection Successful");
-                
-                return con;
-            
-        } catch (Exception e){
-            System.out.println("Failed to connect to db\n" + e.getMessage());
-        }
-        return null;
-    } 
+    public Connection getConnection() {    
+    	try
+	    {
+	        Class.forName("com.mysql.jdbc.Driver");
+	        System.out.println("Connecting to database...");
+	        Connection connection = (Connection) DriverManager.getConnection(host, user, password);
+	        System.out.println("Connection Successful");
+	        
+	        return connection;
+		} catch (Exception e) {
+		    System.out.println("Failed to connect to database.\n" + e.getMessage());
+		}
+    	
+    	return null;
+    }
     
     public void addUser(User u) throws SQLException {
     	Connection dbConnection = null;
