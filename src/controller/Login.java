@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -55,6 +56,11 @@ public class Login extends HttpServlet {
 			if(u != null) {
 				session.setAttribute("username", u.getUsername());
 				session.setAttribute("usertype", u.getType());
+				
+				Cookie loginCookie = new Cookie("user", u.getUsername());
+				loginCookie.setMaxAge(30 * 60); // expires in 30 mins
+				response.addCookie(loginCookie);
+			
 				response.sendRedirect("/tie-novelty-shop/Home");
 			} else {
 				response.getWriter().write("<script type=\"text/javascript\">");
