@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+
 import dbhelper.DBUtilities;
 import model.Product;
 
@@ -39,7 +42,7 @@ public class ViewProduct extends HttpServlet {
 		DBUtilities db = new DBUtilities();
 		HttpSession session = request.getSession();
 		
-		String selectedProduct = request.getParameter("productName");
+		String selectedProduct = Jsoup.clean(request.getParameter("productName"), Whitelist.basic());
 		session.setAttribute("currentpage", "ViewProduct");
 		
 		session.setAttribute("currentProduct", selectedProduct);

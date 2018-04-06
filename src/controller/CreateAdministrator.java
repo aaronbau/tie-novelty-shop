@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+
 import dbhelper.DBUtilities;
 import model.User;
 
@@ -49,7 +52,11 @@ public class CreateAdministrator extends HttpServlet {
 		DBUtilities db = new DBUtilities();
 		HttpSession session = request.getSession();
 		
-		User u = new User(request.getParameter("username").toString(), request.getParameter("email").toString(), request.getParameter("password").toString(), "Administrator");
+		String username = Jsoup.clean(request.getParameter("username"), Whitelist.basic());
+		String email = Jsoup.clean(request.getParameter("email"), Whitelist.basic());
+		String password = Jsoup.clean(request.getParameter("password"), Whitelist.basic());
+		
+		User u = new User(username, email, password, "Administrator");
 		
 		try {
 			if(!(u.getUsername() == "" || u.getUsername() == null))	{

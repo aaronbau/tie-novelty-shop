@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+
 import dbhelper.DBUtilities;
 import model.Product;
 
@@ -38,7 +41,7 @@ public class SearchProducts extends HttpServlet {
 		DBUtilities db = new DBUtilities();
 		ArrayList<Product> products;
 		
-		String searchValue = request.getParameter("search").toString();
+		String searchValue = Jsoup.clean(request.getParameter("search"), Whitelist.basic());;
 		
 		try {
 			products = db.getArrayListSearchProducts(searchValue);			
@@ -61,7 +64,7 @@ public class SearchProducts extends HttpServlet {
 		DBUtilities db = new DBUtilities();
 		ArrayList<Product> products = new ArrayList<>();
 		
-		String filterValue = request.getParameter("filter").toString();
+		String filterValue = Jsoup.clean(request.getParameter("filter"), Whitelist.basic());;
 		
 		System.out.println(filterValue);
 		

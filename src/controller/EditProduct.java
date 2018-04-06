@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+
 import dbhelper.DBUtilities;
 import model.Product;
 
@@ -38,8 +41,8 @@ public class EditProduct extends HttpServlet {
 		
 		DBUtilities db = new DBUtilities();
 		try {
-			System.out.println(request.getParameter("product"));
-			session.setAttribute("product", db.getProduct(request.getParameter("product")));
+			String product = Jsoup.clean(request.getParameter("product"), Whitelist.basic());
+			session.setAttribute("product", db.getProduct(product));
 		}
 		catch (SQLException e){
 			e.printStackTrace();
@@ -61,7 +64,11 @@ public class EditProduct extends HttpServlet {
 		String productName =  session.getAttribute("currentProduct").toString();
 				
 		try {
-			db.editProduct(request.getParameter("description").toString(), Integer.parseInt(request.getParameter("quantity").toString()), Integer.parseInt(request.getParameter("price").toString()), productName);
+			String description = Jsoup.clean(request.getParameter("description"), Whitelist.basic());
+			String quantity = Jsoup.clean(request.getParameter("quantity"), Whitelist.basic());
+			String price = Jsoup.clean(request.getParameter("price"), Whitelist.basic());
+			
+			db.editProduct(description, Integer.parseInt(quantity), Integer.parseInt(price), productName);
 			response.sendRedirect("/tie-novelty-shop/AdminControls");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

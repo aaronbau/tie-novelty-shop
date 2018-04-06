@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+
 import dbhelper.DBUtilities;
 import model.Product;
 
@@ -46,7 +49,8 @@ public class DeleteProduct extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		try {
-			db.deleteProduct(request.getParameter("product").toString());
+			String product = Jsoup.clean(request.getParameter("product"), Whitelist.basic());
+			db.deleteProduct(product);
 				
 			response.sendRedirect("/tie-novelty-shop/ProductManagerControls");
 		} catch (SQLException e) {

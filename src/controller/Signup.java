@@ -3,6 +3,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
 
 import com.google.gson.Gson;
 
@@ -49,16 +53,20 @@ public class Signup extends HttpServlet {
 //		request.getParameter("username").toString();
 		
 //		DBUtilities db = new DBUtilities();
+		
+//		String username = Jsoup.clean(request.getParameter("username"), Whitelist.basic());
+//		String email = Jsoup.clean(request.getParameter("email"), Whitelist.basic());
+//		String password = Jsoup.clean(request.getParameter("password"), Whitelist.basic());
 //		
-//		User u = new User(request.getParameter("username").toString(), request.getParameter("email").toString(), request.getParameter("password").toString());
+//		User u = new User(request.getParameter(username, email, password);
 		
 //		try {
 //			db.addUser(u);
 //			
-//			
 //		} catch (SQLException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
+//			db.writeLog("[GET] Signup.java - Success - " + u.getUsername()  + " " + u.getType(), new Date());
 //			response.sendRedirect("/tie-novelty-shop/Home");
 //		}
 		System.out.println("TRIGGERED");

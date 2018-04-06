@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+
 import dbhelper.DBUtilities;
 
 /**
@@ -42,13 +45,13 @@ public class AddToCart extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		int quantity = Integer.parseInt(request.getParameter("quantity"));
+		String productQuantity = Jsoup.clean(request.getParameter("quantity"), Whitelist.basic());
 		String username = session.getAttribute("username").toString();
 		String productname = session.getAttribute("currentProduct").toString();
 		DBUtilities db = new DBUtilities();
 		
 		try {
-			db.addToCart(username, productname, quantity);
+			db.addToCart(username, productname, Integer.parseInt(productQuantity));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
