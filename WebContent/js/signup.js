@@ -12,18 +12,24 @@ $(document).ready(function()
 			let jsonData = JSON.parse(data);
 			let uError = "username" in jsonData;
 			let pError = "password" in jsonData;
+			let eError = "email" in jsonData;
 			
 			if(uError)
 			{
-				$('.error#username').append(jsonData.username);
+				$('.error#username').html(jsonData.username);
 			}
 			
 			if(pError)
 			{
-				$('.error#password').append(jsonData.password);
+				$('.error#password').html(jsonData.password);
 			}
 			
-			if(!uError && !pError)
+			if(eError)
+			{
+				$('.error#email').html(jsonData.email);
+			}
+			
+			if(!uError && !pError && !eError)
 			{
 				$('input[type="hidden"][name="okgo"]').val("yes");
 				$('#signup').submit();

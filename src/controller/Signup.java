@@ -58,20 +58,32 @@ public class Signup extends HttpServlet {
 		{
 			UserHelper helper = new UserHelper();
 			
-			boolean newUser = helper.findUserbyUsername(username) == null;
-			boolean goodPassword = true;
+			boolean isNewUser = false; 
 			
-			if(!newUser)
+			if(username.trim() != null)
 			{
-				jsonResponse = jsonResponse.concat("\"username\":\"Username is already taken\"");
+				isNewUser = helper.findUserbyUsername(username) == null;
+				
+				jsonResponse = isNewUser ? "" : jsonResponse.concat("\"username\":\"Username is already taken\"");
+			}
+			else
+			{
+				jsonResponse = jsonResponse.concat("\"username\":\"Username is blank\"");
 			}
 			
+			if(email.trim() == null)
+			{
+				jsonResponse = jsonResponse.concat("\"email\":\"Email is blank\"");
+			}
+			
+			boolean goodPassword = true;
+						
 			if(!goodPassword)
 			{
 				
 			}
 			
-			if(newUser && goodPassword && okgo.equals("yes"))
+			if(isNewUser && goodPassword && okgo.equals("yes"))
 			{
 				String salt = new RandomStringGenerator().generateRandomString(5);
 				PasswordEncryptor pe = new PasswordEncryptor();

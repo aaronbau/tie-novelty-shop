@@ -19,11 +19,11 @@
 			<br> 
 			<input type="text" name="username" required/> 
 			<br> 
-			<label for="password">Password</label><span class="error" id="password"></span>
+			<label for="password">Password</label><span style="margin-left: 10px;" class="error" id="password"></span>
 			<br>
 			<input type="password" name="password" required/>
 			<br>
-			<label for="email">Email</label>
+			<label for="email">Email</label><span style="margin-left: 10px;" class="error" id="email"></span>
 			<br>
 			<input type="email" name="email" required/>
 			<br>
