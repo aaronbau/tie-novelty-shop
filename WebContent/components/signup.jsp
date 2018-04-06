@@ -15,11 +15,11 @@
 		</div>
 		<br> 
 		<form id="signup" action="Signup" method="POST">
-			<label for="username">Username</label> 
+			<label for="username">Username</label><span style="margin-left: 10px;" class="error" id="username"></span>
 			<br> 
 			<input type="text" name="username" required/> 
 			<br> 
-			<label for="password">Password</label>
+			<label for="password">Password</label><span class="error" id="password"></span>
 			<br>
 			<input type="password" name="password" required/>
 			<br>
@@ -28,8 +28,8 @@
 			<input type="email" name="email" required/>
 			<br>
 			<br>
+			<input type="hidden" name="okgo" value="no"/>
 		</form>
-		<div id="error"></div>
 		<button id="signup-button">Sign-up</button>
 	</div>
 </body>

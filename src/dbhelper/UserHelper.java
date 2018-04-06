@@ -18,8 +18,8 @@ public class UserHelper {
 	
 	public void addUser(User u) throws SQLException {		
     	String query = "INSERT INTO users"
-				+ "(username, password, email, type) VALUES"
-				+ "(?,?,?,?)";
+				+ "(username, password, email, type, salt) VALUES"
+				+ "(?,?,?,?,?)";
     	
     	Connection connection = dbUtil.getConnection();
     	PreparedStatement preparedStatement = (PreparedStatement) connection.prepareStatement(query);
@@ -28,6 +28,7 @@ public class UserHelper {
 			preparedStatement.setString(2, u.getPassword());
 			preparedStatement.setString(3, u.getEmail());
 			preparedStatement.setString(4, u.getType());
+			preparedStatement.setString(5, u.getSalt());
 
 			// execute insert SQL statement
 			preparedStatement.executeUpdate();
@@ -50,39 +51,37 @@ public class UserHelper {
 		}
     }
     
-    public User login(String username, String password) throws SQLException {
-    	Connection dbConnection = null;
-		PreparedStatement preparedStatement = null;
-    	String query = "SELECT * FROM users WHERE username = ? AND password = ?";
-    	User u;
+    public User findUserbyUsername(String username) throws SQLException {
+    	
+    	String query = "SELECT * FROM users WHERE username = ?";
+    	
+    	Connection connection = dbUtil.getConnection();
+    	PreparedStatement preparedStatement = (PreparedStatement) connection.clientPrepareStatement(query);
     	
     	try {
-			dbConnection = getConnection();
-			preparedStatement = (PreparedStatement) dbConnection.prepareStatement(query);
-
 			preparedStatement.setString(1, username);
-			preparedStatement.setString(2, password);
 
 			// execute insert SQL statement
 			ResultSet rs = preparedStatement.executeQuery();
-			int count = 0;
 			
 			while(rs.next()) {
-				return u = new User(rs.getString("username").toString(), rs.getString("email").toString(), rs.getString("password").toString(), rs.getString("type").toString());
+				return new User(rs.getString("username").toString(), 
+								rs.getString("email").toString(), 
+								rs.getString("password").toString(), 
+								rs.getString("type").toString(),
+								rs.getString("salt").toString());
 			}
 			
 		} catch (SQLException e) {
-
-			System.out.println(e.getMessage());
-
+			System.out.println(e);
 		} finally {
 
 			if (preparedStatement != null) {
 				preparedStatement.close();
 			}
 
-			if (dbConnection != null) {
-				dbConnection.close();
+			if (connection != null) {
+				connection.close();
 			}
 		}
     	

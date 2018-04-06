@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.User;
-
-import dbhelper.DBUtilities;
+import security.PasswordEncryptor;
+import dbhelper.UserHelper;
 
 /**
  * Servlet implementation class Login
@@ -36,9 +36,6 @@ public class Login extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-//		response.getWriter().append("Served at: ").append(request.getContextPath());
-//		RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-//		rd.forward(request, response);
 	}
 
 	/**
@@ -46,24 +43,29 @@ public class Login extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		DBUtilities db = new DBUtilities();
-		User u;
+		
 		HttpSession session = request.getSession();
 		
 		try {
-			u = (User) db.login(request.getParameter("username"), request.getParameter("password"));
+			UserHelper helper = new UserHelper();
+			
+			User u = helper.findUserbyUsername(request.getParameter("username"));
+			
 			if(u != null) {
+				PasswordEncryptor pe = new PasswordEncryptor();
+				boolean passwordIsEqual = pe.checkPassword(request.getParameter("password"), u.getPassword(), u.getSalt());
+				
+				System.out.println(this.getClass().getName() + " - equal password? = " + passwordIsEqual);
 				session.setAttribute("username", u.getUsername());
 				session.setAttribute("usertype", u.getType());
-				response.sendRedirect("/tie-novelty-shop/Home");
+//				response.sendRedirect("/tie-novelty-shop/Home");
 			} else {
-				response.getWriter().write("<script type=\"text/javascript\">");
-				response.getWriter().write("alert('User or password incorrect');");
-				response.getWriter().write("location='" + session.getAttribute("currentpage") + "'");
-				response.getWriter().write("</script>");
+//				response.getWriter().write("<script type=\"text/javascript\">");
+//				response.getWriter().write("alert('User or password incorrect');");
+//				response.getWriter().write("location='" + session.getAttribute("currentpage") + "'");
+//				response.getWriter().write("</script>");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 		

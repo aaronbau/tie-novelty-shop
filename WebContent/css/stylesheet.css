@@ -69,6 +69,11 @@ body {
 	font-family: Sans-serif;
 }
 
+.error {
+	font-size: 0.5em;
+	color: #ff5555;
+}
+
 #remove-from-cart:hover {
 	background-color: #ffcccc;
 }
