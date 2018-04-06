@@ -11,6 +11,10 @@
 <script src="js/script.js"></script>
 </head>
 <body>
+<%
+	if(session.getAttribute("usertype").toString() == null)
+		response.sendRedirect("/tie-novelty-shop/Home");
+%>
 	<%@ include file="components/navbar.jsp" %>	
 	<a style="font-size: .80em;" href="Home">back to Home</a>
 	<%
