@@ -10,7 +10,7 @@
 </head>
 <body>
 <%
-	if(session.getAttribute("usertype") == null || session.getAttribute("usertype").toString() != "Administrator")
+	if(session.getAttribute("usertype") == null || session.getAttribute("usertype").toString().compareToIgnoreCase("Administrator") != 0)
 		response.sendRedirect("/tie-novelty-shop/Home");
 %>
 <%@ include file="components/navbar.jsp" %>

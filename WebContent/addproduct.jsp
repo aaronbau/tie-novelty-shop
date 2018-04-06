@@ -10,7 +10,7 @@
 </head>
 <body>
 <%
-	if(session.getAttribute("usertype") == null || session.getAttribute("usertype").toString() != "Product Manager")
+	if(session.getAttribute("usertype") == null || session.getAttribute("usertype").toString().compareToIgnoreCase("Product Manager") != 0)
 		response.sendRedirect("/tie-novelty-shop/Home");
 %>
 
