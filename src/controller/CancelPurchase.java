@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -44,6 +45,7 @@ public class CancelPurchase extends HttpServlet {
 		
 		try {
 			db.removeFromPurchases(username, productname, Integer.parseInt(quantity));
+			db.writeLog("[POST] CancelPurchase.java - Product " + productname + " was removed from the purchases of " + session.getAttribute("username") + " " + session.getAttribute("usertype"), new Date());
 			response.sendRedirect("/tie-novelty-shop/AllPurchases");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

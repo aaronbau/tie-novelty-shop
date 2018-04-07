@@ -37,11 +37,11 @@
 					<br><br>
 					In Stock
 					<br>
-					<input type="text" name="quantity" value="<%=product.getQuantity() %>"/>
+					<input type="number" name="quantity" min="0" value="<%=product.getQuantity() %>"/>
 					<br><br>
 					Price
 					<br>
-					<input type="text" name="price" value="<%=product.getPrice() %>"/>
+					<input type="number" name="price" min="0" value="<%=product.getPrice() %>"/>
 					<br><br><br>
 					<input type="submit" name="done" value="Edit Product"/>
 				</form>

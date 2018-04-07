@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -65,6 +66,8 @@ public class CreateAdministrator extends HttpServlet {
 				response.getWriter().write("alert('Administrator successfully created');");
 				response.getWriter().write("location='AdminControls'");
 				response.getWriter().write("</script>");
+
+				db.writeLog("[POST] CreateAdministrator.java - Administrator " + u.toString() + " was created by " + session.getAttribute("username") + " " + session.getAttribute("usertype"), new Date());
 			} else
 				response.getWriter().write("<script type=\"text/javascript\">");
 			response.getWriter().write("alert('Username already taken');");

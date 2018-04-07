@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -69,6 +70,8 @@ public class EditProduct extends HttpServlet {
 			String price = Jsoup.clean(request.getParameter("price"), Whitelist.basic());
 			
 			db.editProduct(description, Integer.parseInt(quantity), Integer.parseInt(price), productName);
+			db.writeLog("[POST] EditProduct.java - Product " + productName + " has been edited by " + session.getAttribute("username") + " " + session.getAttribute("usertype"), new Date());
+			
 			response.sendRedirect("/tie-novelty-shop/AdminControls");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

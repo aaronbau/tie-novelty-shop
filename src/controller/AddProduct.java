@@ -78,7 +78,7 @@ public class AddProduct extends HttpServlet {
 		
 		try {
 			db.addProduct(p);
-			db.writeLog("[POST] AddProduct.java - Added product - " + session.getAttribute("username") + " " + session.getAttribute("usertype"), new Date());
+			db.writeLog("[POST] AddProduct.java - Product " + p.toString() + " added by " + session.getAttribute("username") + " " + session.getAttribute("usertype"), new Date());
 			response.sendRedirect("/tie-novelty-shop/Home");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

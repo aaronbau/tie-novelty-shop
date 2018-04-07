@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
@@ -63,6 +65,7 @@ public class SearchProducts extends HttpServlet {
 		//doGet(request, response);
 		DBUtilities db = new DBUtilities();
 		ArrayList<Product> products = new ArrayList<>();
+		HttpSession session = request.getSession();
 		
 		String filterValue = Jsoup.clean(request.getParameter("filter"), Whitelist.basic());;
 		
@@ -77,6 +80,9 @@ public class SearchProducts extends HttpServlet {
 				products = db.getArrayListPriceLowestProducts();
 			else if(filterValue.equalsIgnoreCase("f4"))
 				products = db.getArrayListPriceHighestProducts();
+			
+
+			db.writeLog("[GET] SearchProducts.java - Search key: " + filterValue + " has been searched by " + session.getAttribute("username") + " " + session.getAttribute("usertype"), new Date());
 			
 			request.setAttribute("productList", products);
 		} catch (SQLException e) {

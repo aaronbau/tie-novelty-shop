@@ -28,11 +28,11 @@
 		<br>
 		Quantity
 		<br>
-		<input type="text" name="quantity" required/>
+		<input type="number" name="quantity" min="0" required/>
 		<br>
 		In Stock
 		<br>
-		<input type="text" name="price" required/>
+		<input type="number" name="price" min="0" required/>
 		<br>
 		<br>
 		<input type="file" name="image" value="Add Image" required/>

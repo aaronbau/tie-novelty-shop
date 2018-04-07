@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -52,6 +53,7 @@ public class AddToCart extends HttpServlet {
 		
 		try {
 			db.addToCart(username, productname, Integer.parseInt(productQuantity));
+			db.writeLog("[POST] AddToCart.java - Product " + productname + " was added to the cart of " + session.getAttribute("username") + " " + session.getAttribute("usertype"), new Date());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

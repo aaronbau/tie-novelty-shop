@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -51,6 +52,7 @@ public class DeleteProduct extends HttpServlet {
 		try {
 			String product = Jsoup.clean(request.getParameter("product"), Whitelist.basic());
 			db.deleteProduct(product);
+			db.writeLog("[POST] DeleteProduct.java - Product " + product + " has been deleted by " + session.getAttribute("username") + " " + session.getAttribute("usertype"), new Date());		
 				
 			response.sendRedirect("/tie-novelty-shop/ProductManagerControls");
 		} catch (SQLException e) {

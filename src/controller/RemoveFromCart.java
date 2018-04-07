@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,6 +44,8 @@ public class RemoveFromCart extends HttpServlet {
 		
 		try {
 			db.removeFromCart(username, productname, Integer.parseInt(quantity));
+			db.writeLog("[GET] RemoveFromCart.java - Product " + productname + " has been removed from the cart of " + session.getAttribute("username") + " " + session.getAttribute("usertype"), new Date());
+			
 			response.sendRedirect("/tie-novelty-shop/" + session.getAttribute("currentPage"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
