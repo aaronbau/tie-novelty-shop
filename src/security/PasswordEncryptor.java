@@ -33,9 +33,9 @@ public class PasswordEncryptor {
 		
 		Base64.Encoder b64Encoder = Base64.getEncoder();
 		
-		System.out.println("Password - " + password);
-		System.out.println("Salt - " + salt);
-		System.out.println("Encrypted Password - " + b64Encoder.encodeToString(encryptedPass));
+//		System.out.println("Password - " + password);
+//		System.out.println("Salt - " + salt);
+//		System.out.println("Encrypted Password - " + b64Encoder.encodeToString(encryptedPass));
 		
 		return b64Encoder.encodeToString(encryptedPass);
 	}

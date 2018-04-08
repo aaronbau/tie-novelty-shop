@@ -1,38 +1,62 @@
-$(document).ready(function()
+var usernameIsValid = false;
+var passwordIsValid = false;
+
+function checkValid()
 {
-	$('#signup-button').click(function()
+	if(usernameIsValid && passwordIsValid)
+	{
+		$('input[type="submit"]').prop('disabled', false);
+	}
+}
+
+$(document).ready(function()
+{	
+	$('input[name="username"]').blur(function()
 	{
 		$.ajax
 		({
 			type : 'POST',
 			url : 'Signup',
-			data : $('#signup').serialize()
+			data : {
+				username : this.value
+			}
 		}).done(function(data)
 		{
 			let jsonData = JSON.parse(data);
-			let uError = "username" in jsonData;
-			let pError = "password" in jsonData;
-			let eError = "email" in jsonData;
-			
-			if(uError)
+			if("username" in jsonData)
 			{
-				$('.error#username').html(jsonData.username);
+				console.log(jsonData.username);
+				$(".error#username").html(jsonData.username);
 			}
-			
-			if(pError)
+			else
 			{
-				$('.error#password').html(jsonData.password);
+				usernameIsValid = true;
+				checkValid();
 			}
-			
-			if(eError)
-			{
-				$('.error#email').html(jsonData.email);
+		});
+	});
+	
+	$('input[name="password"]').blur(function()
+	{
+		$.ajax
+		({
+			type : 'POST',
+			url : 'Signup',
+			data : {
+				password : this.value
 			}
-			
-			if(!uError && !pError && !eError)
+		}).done(function(data)
+		{
+			let jsonData = JSON.parse(data);
+			if("password" in jsonData)
 			{
-				$('input[type="hidden"][name="okgo"]').val("yes");
-				$('#signup').submit();
+				console.log(jsonData.password);
+				$(".error#password").html(jsonData.password);
+			}
+			else
+			{
+				passwordIsValid = true;
+				checkValid();
 			}
 		});
 	});

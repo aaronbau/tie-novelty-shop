@@ -15,22 +15,25 @@
 		</div>
 		<br> 
 		<form id="signup" action="Signup" method="POST">
-			<label for="username">Username</label><span style="margin-left: 10px;" class="error" id="username"></span>
+			<label for="username">Username</label>
 			<br> 
 			<input type="text" name="username" required/> 
-			<br> 
-			<label for="password">Password</label><span style="margin-left: 10px;" class="error" id="password"></span>
+			<br>
+			<div class="error" id="username"> </div>
+			<br>
+			<label for="password">Password</label>
 			<br>
 			<input type="password" name="password" required/>
 			<br>
-			<label for="email">Email</label><span style="margin-left: 10px;" class="error" id="email"></span>
+			<div class="error" id="password"> </div>
+			<br>
+			<label for="email">Email</label>
 			<br>
 			<input type="email" name="email" required/>
 			<br>
 			<br>
-			<input type="hidden" name="okgo" value="no"/>
+			<input type="submit" value="Sign-up" disabled=true>
 		</form>
-		<button id="signup-button">Sign-up</button>
 	</div>
 </body>
 </html>

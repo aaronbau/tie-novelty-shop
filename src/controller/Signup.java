@@ -46,44 +46,37 @@ public class Signup extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String username = request.getParameter("username").toString();
-		String email = request.getParameter("email").toString();
-		String password = request.getParameter("password").toString();
-		
-		String okgo = request.getParameter("okgo").toString();
+		String username = request.getParameter("username");
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
 		
 		String jsonResponse = "{";
 		
 		try 
 		{
 			UserHelper helper = new UserHelper();
-			
-			boolean isNewUser = false; 
-			
-			if(username.trim() != null)
-			{
-				isNewUser = helper.findUserbyUsername(username) == null;
-				
-				jsonResponse = isNewUser ? "" : jsonResponse.concat("\"username\":\"Username is already taken\"");
-			}
-			else
-			{
-				jsonResponse = jsonResponse.concat("\"username\":\"Username is blank\"");
-			}
-			
-			if(email.trim() == null)
-			{
-				jsonResponse = jsonResponse.concat("\"email\":\"Email is blank\"");
+			boolean isNewUser = false;
+			boolean isGoodPassword = false;
+	
+			if(username != null)
+			{	
+				if(username.length() < 3)
+					jsonResponse = jsonResponse.concat("\"username\":\"Username should contain at least 3 characters.\"");
+				else
+				{
+					isNewUser = helper.findUserbyUsername(username) == null;
+					System.out.println(isNewUser);
+					
+					jsonResponse = isNewUser ? jsonResponse.concat("") : jsonResponse.concat("\"username\":\"Username is already taken\"");
+				}
 			}
 			
-			boolean goodPassword = true;
-						
-			if(!goodPassword)
+			if(password != null)
 			{
-				
+				isGoodPassword = true;
 			}
 			
-			if(isNewUser && goodPassword && okgo.equals("yes"))
+			if(isNewUser && isGoodPassword)
 			{
 				String salt = new RandomStringGenerator().generateRandomString(5);
 				PasswordEncryptor pe = new PasswordEncryptor();
@@ -98,8 +91,8 @@ public class Signup extends HttpServlet {
 				
 				response.sendRedirect("/tie-novelty-shop/Home");
 			}
-			
 			response.getWriter().write(jsonResponse + "}");
+		
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
