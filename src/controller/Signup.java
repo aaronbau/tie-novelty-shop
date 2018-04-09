@@ -3,6 +3,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 
 import javax.crypto.spec.PBEKeySpec;
 import javax.servlet.RequestDispatcher;
@@ -12,6 +13,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+
+import com.google.gson.Gson;
 
 import dbhelper.DBUtilities;
 import dbhelper.UserHelper;
@@ -46,9 +52,11 @@ public class Signup extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String username = request.getParameter("username");
-		String email = request.getParameter("email");
-		String password = request.getParameter("password");
+		DBUtilities db = new DBUtilities();
+		
+		String username = Jsoup.clean(request.getParameter("username"), Whitelist.basic());
+		String email = Jsoup.clean(request.getParameter("email"), Whitelist.basic());
+		String password = Jsoup.clean(request.getParameter("password"), Whitelist.basic());
 		
 		String jsonResponse = "{";
 		
@@ -88,6 +96,8 @@ public class Signup extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("username", u.getUsername());
 				session.setAttribute("usertype", u.getType());
+				
+				db.writeLog("[GET] Signup.java - Success - " + u.getUsername()  + " " + u.getType(), new Date());
 				
 				response.sendRedirect("/tie-novelty-shop/Home");
 			}

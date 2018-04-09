@@ -9,6 +9,11 @@
 <script src="js/script.js"></script>
 </head>
 <body>
+<%
+	if(session.getAttribute("usertype") == null || session.getAttribute("usertype").toString().compareToIgnoreCase("Product Manager") != 0)
+		response.sendRedirect("/tie-novelty-shop/Home");
+%>
+
 <%@ include file="components/navbar.jsp" %>
 <a style="font-size: .80em;" href="ProductManagerControls">back to Product Manager Controls</a>
 <h1 style="font-size: 2em;">Add New Product</h1>
@@ -23,11 +28,11 @@
 		<br>
 		Quantity
 		<br>
-		<input type="text" name="quantity" required/>
+		<input type="number" name="quantity" min="0" required/>
 		<br>
 		In Stock
 		<br>
-		<input type="text" name="price" required/>
+		<input type="number" name="price" min="0" required/>
 		<br>
 		<br>
 		<input type="file" name="image" value="Add Image" required/>

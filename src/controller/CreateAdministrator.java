@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
 
 import dbhelper.DBUtilities;
 import model.User;
@@ -49,7 +53,11 @@ public class CreateAdministrator extends HttpServlet {
 		DBUtilities db = new DBUtilities();
 		HttpSession session = request.getSession();
 		
-		User u = new User(request.getParameter("username").toString(), request.getParameter("email").toString(), request.getParameter("password").toString(), "Administrator");
+		String username = Jsoup.clean(request.getParameter("username"), Whitelist.basic());
+		String email = Jsoup.clean(request.getParameter("email"), Whitelist.basic());
+		String password = Jsoup.clean(request.getParameter("password"), Whitelist.basic());
+		
+		User u = new User(username, email, password, "Administrator");
 		
 		try {
 			if(!(u.getUsername() == "" || u.getUsername() == null))	{
@@ -58,6 +66,8 @@ public class CreateAdministrator extends HttpServlet {
 				response.getWriter().write("alert('Administrator successfully created');");
 				response.getWriter().write("location='AdminControls'");
 				response.getWriter().write("</script>");
+
+				db.writeLog("[POST] CreateAdministrator.java - Administrator " + u.toString() + " was created by " + session.getAttribute("username") + " " + session.getAttribute("usertype"), new Date());
 			} else
 				response.getWriter().write("<script type=\"text/javascript\">");
 			response.getWriter().write("alert('Username already taken');");

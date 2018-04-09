@@ -10,6 +10,10 @@
 <script src="js/script.js"></script>
 </head>
 <body>
+<%
+	if(session.getAttribute("usertype") == null || session.getAttribute("usertype").toString().compareToIgnoreCase("Product Manager") != 0)
+		response.sendRedirect("/tie-novelty-shop/Home");
+%>
 	<%@ include file="components/navbar.jsp"%>
 	<h1 style="font-size: 2em;">Products</h1>
 			<form>

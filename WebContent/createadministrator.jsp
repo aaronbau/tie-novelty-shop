@@ -9,6 +9,10 @@
 <script src="js/script.js"></script>
 </head>
 <body>
+<%
+	if(session.getAttribute("usertype") == null || session.getAttribute("usertype").toString().compareToIgnoreCase("Administrator") != 0)
+		response.sendRedirect("/tie-novelty-shop/Home");
+%>
 <%@ include file="components/navbar.jsp" %>
 <a style="font-size: .80em;" href="AdminControls">back to Admin Controls</a>
 <h1 style="font-size: 2em;">Create Administrator</h1>

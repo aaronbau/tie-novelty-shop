@@ -17,13 +17,20 @@
 				Cravate</button>
 		</div>
 		<div class="account-buttons">
-			<%
+			<% 
 				if (session.getAttribute("username") == null) {
 			%>
 			<button style="margin-right: 10px;" onclick="showSignup()">
 				Sign Up</button>
 			<button onclick="showLogin()">Log In</button>
 			<%
+				String username = null;
+				Cookie[] cookies = request.getCookies();
+				
+				if(cookies != null)
+					for(Cookie cookie : cookies)
+						if(cookie.getName().equals("user")) 
+							username = cookie.getValue();
 				} else {
 					if (session.getAttribute("usertype").equals("User")) {
 			%>

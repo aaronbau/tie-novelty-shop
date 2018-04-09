@@ -3,6 +3,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -798,5 +799,40 @@ public class DBUtilities {
 		}
     	
     	return products;
+    }
+    
+    public void writeLog(String message, Date date) throws SQLException {
+    	Connection dbConnection = null;
+		PreparedStatement preparedStatement = null;
+		String query = "INSERT INTO logs"
+				+ "(log, time) VALUES"
+				+ "(?,?)";
+    	
+    	try {
+			dbConnection = getConnection();
+			preparedStatement = (PreparedStatement) dbConnection.prepareStatement(query);
+
+			preparedStatement.setString(1, message);
+			preparedStatement.setString(2, date.toString());
+
+			// execute insert SQL statement
+			preparedStatement.executeUpdate();
+
+			System.out.println("Record is inserted into logs table!");
+			System.out.println(message + " " + date.toString());
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+
+		} finally {
+
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+		} 
     }
 }

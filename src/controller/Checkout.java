@@ -1,6 +1,9 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Date;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,6 +45,12 @@ public class Checkout extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		db.Buy(session.getAttribute("username").toString());
+		try {
+			db.writeLog("[POST] Checkout.java - User " + session.getAttribute("username") + " " + session.getAttribute("usertype") + " has checked out", new Date());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		response.sendRedirect("/tie-novelty-shop/ViewPurchases");
 	}
