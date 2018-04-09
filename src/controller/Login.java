@@ -1,11 +1,9 @@
 package controller;
 
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -65,22 +63,28 @@ public class Login extends HttpServlet {
 				PasswordEncryptor pe = new PasswordEncryptor();
 				boolean passwordIsEqual = pe.checkPassword(password, u.getPassword(), u.getSalt());
 				
-				System.out.println(this.getClass().getName() + " - equal password? = " + passwordIsEqual);
-				session.setAttribute("username", u.getUsername());
-				session.setAttribute("usertype", u.getType());
+//				System.out.println(this.getClass().getName() + " - equal password? = " + passwordIsEqual);
 				
-				Cookie loginCookie = new Cookie("user", u.getUsername());
-				loginCookie.setMaxAge(30 * 60); // expires in 30 mins
-				response.addCookie(loginCookie);
-				
-				db.writeLog("[POST] Login.java - Success - " + u.getUsername()  + " " + u.getType(), new Date());
-				response.sendRedirect("/tie-novelty-shop/Home");
-			} else {
-				response.getWriter().write("<script type=\"text/javascript\">");
-				response.getWriter().write("alert('User or password incorrect');");
-				response.getWriter().write("location='" + session.getAttribute("currentpage") + "'");
-				response.getWriter().write("</script>");
-				db.writeLog("[POST] Login.java - Failed - " + u.getUsername()  + " " + u.getType(), new Date());
+				if(passwordIsEqual)
+				{
+					session.setAttribute("username", u.getUsername());
+					session.setAttribute("usertype", u.getType());
+					
+					Cookie loginCookie = new Cookie("user", u.getUsername());
+					loginCookie.setMaxAge(30 * 60); // expires in 30 mins
+					response.addCookie(loginCookie);
+					
+					db.writeLog("[POST] Login.java - Success - " + u.getUsername()  + " " + u.getType(), new Date());
+					response.sendRedirect("/tie-novelty-shop/Home");
+				}
+				else
+				{
+					response.getWriter().write("<script type=\"text/javascript\">");
+					response.getWriter().write("alert('User or password incorrect');");
+					response.getWriter().write("location='" + session.getAttribute("currentpage") + "'");
+					response.getWriter().write("</script>");
+					db.writeLog("[POST] Login.java - Failed - " + u.getUsername()  + " " + u.getType(), new Date());
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
 
-import javax.crypto.spec.PBEKeySpec;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,8 +14,6 @@ import javax.servlet.http.HttpSession;
 
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
-
-import com.google.gson.Gson;
 
 import dbhelper.DBUtilities;
 import dbhelper.UserHelper;
