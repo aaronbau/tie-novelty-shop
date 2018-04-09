@@ -17,13 +17,13 @@
 		<form id="signup" action="Signup" method="POST">
 			<label for="username">Username</label>
 			<br> 
-			<input type="text" name="username" required/> 
+			<input type="text" id="signup-username" name="username" required/> 
 			<br>
 			<div class="error" id="username"> </div>
 			<br>
 			<label for="password">Password</label>
 			<br>
-			<input type="password" name="password" required/>
+			<input type="password" id="signup-password" name="password" required/>
 			<br>
 			<div class="error" id="password"> </div>
 			<br>
@@ -32,7 +32,7 @@
 			<input type="email" name="email" required/>
 			<br>
 			<br>
-			<input type="submit" value="Sign-up" disabled=true>
+			<input type="submit" id="signup-submit" value="Sign-up" disabled=true>
 		</form>
 	</div>
 </body>

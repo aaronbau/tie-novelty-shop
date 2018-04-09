@@ -26,6 +26,8 @@
 		<br>
 		<input type="submit" value="Log in">
 	</form>
+	<br>
+	<a href="ResetPassword" style="font-size: 0.8em;">Forgot your password?</a>
 </div>
 </body>
 </html>

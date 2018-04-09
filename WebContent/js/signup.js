@@ -5,13 +5,13 @@ function checkValid()
 {
 	if(usernameIsValid && passwordIsValid)
 	{
-		$('input[type="submit"]').prop('disabled', false);
+		$('#signup-submit').prop('disabled', false);
 	}
 }
 
 $(document).ready(function()
 {	
-	$('input[name="username"]').blur(function()
+	$('#signup-username').blur(function()
 	{
 		$.ajax
 		({
@@ -36,7 +36,7 @@ $(document).ready(function()
 		});
 	});
 	
-	$('input[name="password"]').blur(function()
+	$('#signup-password').blur(function()
 	{
 		$.ajax
 		({
