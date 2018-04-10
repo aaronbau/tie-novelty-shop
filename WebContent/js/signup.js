@@ -1,9 +1,11 @@
 var usernameIsValid = false;
 var passwordIsValid = false;
+var emailIsValid = false;
 
 function checkValid()
 {
-	if(usernameIsValid && passwordIsValid)
+	console.log(usernameIsValid + " " + passwordIsValid + " " + emailIsValid);
+	if(usernameIsValid && emailIsValid && passwordIsValid)
 	{
 		$('#signup-submit').prop('disabled', false);
 	}
@@ -25,13 +27,47 @@ $(document).ready(function()
 			let jsonData = JSON.parse(data);
 			if("username" in jsonData)
 			{
-				console.log(jsonData.username);
-				$(".error#username").html(jsonData.username);
+				if(jsonData.username == "yes")
+				{
+					usernameIsValid = true;
+					$(".error#username").html("");
+					checkValid();
+				}
+				else
+				{
+					console.log(jsonData.username);
+					$(".error#username").html(jsonData.username);
+				}
 			}
-			else
+		});
+	});
+
+	$('#signup-email').blur(function()
+	{
+		$.ajax
+		({
+			type : 'POST',
+			url : 'Signup',
+			data : {
+				email : this.value
+			}
+		}).done(function(data)
+		{
+			let jsonData = JSON.parse(data);
+			if("email" in jsonData)
 			{
-				usernameIsValid = true;
-				checkValid();
+				console.log(jsonData.email);
+				if(jsonData.email == "yes")
+				{
+					emailIsValid = true;
+					$(".error#email").html("");
+					checkValid();
+				}
+				else
+				{
+					console.log(jsonData.email);
+					$(".error#email").html(jsonData.email);
+				}
 			}
 		});
 	});
@@ -50,13 +86,17 @@ $(document).ready(function()
 			let jsonData = JSON.parse(data);
 			if("password" in jsonData)
 			{
-				console.log(jsonData.password);
-				$(".error#password").html(jsonData.password);
-			}
-			else
-			{
-				passwordIsValid = true;
-				checkValid();
+				if(jsonData.password == "yes")
+				{
+					passwordIsValid = true;
+					$(".error#password").html("");
+					checkValid();
+				}
+				else
+				{
+					console.log(jsonData.password);
+					$(".error#password").html(jsonData.password);
+				}
 			}
 		});
 	});

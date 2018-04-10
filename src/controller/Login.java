@@ -50,42 +50,53 @@ public class Login extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		DBUtilities db = new DBUtilities();
+		String jsonResponse = "{";
 		
 		try {
 			UserHelper helper = new UserHelper();
 			
-			String username = Jsoup.clean(request.getParameter("username"), Whitelist.basic());
-			String password = Jsoup.clean(request.getParameter("password"), Whitelist.basic());
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
 			
-			User u = helper.findUserbyUsername(username);
-			
-			if(u != null) {
-				PasswordEncryptor pe = new PasswordEncryptor();
-				boolean passwordIsEqual = pe.checkPassword(password, u.getPassword(), u.getSalt());
+			if(username != null)
+			{
+				String cleanUsername = Jsoup.clean(username, Whitelist.basic());
+				User u = helper.findUserbyUsername(cleanUsername);
 				
-//				System.out.println(this.getClass().getName() + " - equal password? = " + passwordIsEqual);
-				
-				if(passwordIsEqual)
+				if(u != null) 
 				{
-					session.setAttribute("username", u.getUsername());
-					session.setAttribute("usertype", u.getType());
+					PasswordEncryptor pe = new PasswordEncryptor();
+					boolean passwordIsEqual = pe.checkPassword(password, u.getPassword(), u.getSalt());
 					
-					Cookie loginCookie = new Cookie("user", u.getUsername());
-					loginCookie.setMaxAge(30 * 60); // expires in 30 mins
-					response.addCookie(loginCookie);
-					
-					db.writeLog("[POST] Login.java - Success - " + u.getUsername()  + " " + u.getType(), new Date());
-					response.sendRedirect("/tie-novelty-shop/Home");
+					if(passwordIsEqual)
+					{
+						session.setAttribute("username", u.getUsername());
+						session.setAttribute("usertype", u.getType());
+						
+						Cookie loginCookie = new Cookie("user", u.getUsername());
+						loginCookie.setMaxAge(30 * 60); // expires in 30 mins
+						response.addCookie(loginCookie);
+						
+						db.writeLog("[POST] Login.java - Success - " + u.getUsername()  + " " + u.getType(), new Date());
+						jsonResponse = jsonResponse.concat("\"href\":\"Home\"");
+					}
+					else
+					{
+						jsonResponse = jsonResponse.concat("\"invalid\":\"Invalid username or password.\"");
+						db.writeLog("[POST] Login.java - Failed - " + u.getUsername()  + " " + u.getType(), new Date());
+					}
 				}
 				else
 				{
-					response.getWriter().write("<script type=\"text/javascript\">");
-					response.getWriter().write("alert('User or password incorrect');");
-					response.getWriter().write("location='" + session.getAttribute("currentpage") + "'");
-					response.getWriter().write("</script>");
-					db.writeLog("[POST] Login.java - Failed - " + u.getUsername()  + " " + u.getType(), new Date());
+					jsonResponse = jsonResponse.concat("\"invalid\":\"Invalid username or password.\"");
 				}
 			}
+			else
+			{
+				jsonResponse = jsonResponse.concat("\"invalid\":\"Enter a username\"");
+			}
+			
+			response.getWriter().write(jsonResponse + "}");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		

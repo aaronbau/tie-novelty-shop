@@ -29,8 +29,9 @@
 			<br>
 			<label for="email">Email</label>
 			<br>
-			<input type="email" name="email" required/>
+			<input type="email" id="signup-email" name="email" required/>
 			<br>
+			<div class="error" id="email"> </div>
 			<br>
 			<input type="submit" id="signup-submit" value="Sign-up" disabled=true>
 		</form>

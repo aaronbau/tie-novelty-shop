@@ -50,37 +50,52 @@ public class Signup extends HttpServlet {
 		
 		DBUtilities db = new DBUtilities();
 		
-		String username = Jsoup.clean(request.getParameter("username"), Whitelist.basic());
-		String email = Jsoup.clean(request.getParameter("email"), Whitelist.basic());
-		String password = Jsoup.clean(request.getParameter("password"), Whitelist.basic());
+		String username = request.getParameter("username");
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
 		
 		String jsonResponse = "{";
 		
 		try 
 		{
 			UserHelper helper = new UserHelper();
-			boolean isNewUser = false;
+			boolean isGoodUser = false;
 			boolean isGoodPassword = false;
+			boolean isGoodEmail = false;
 	
 			if(username != null)
 			{	
-				if(username.length() < 3)
+				String cleanUsername = Jsoup.clean(username, Whitelist.basic());
+				if(!cleanUsername.equals(username))
+					jsonResponse = jsonResponse.concat("\"username\":\"Invalid username.\"");
+				else if(username.length() < 3)
 					jsonResponse = jsonResponse.concat("\"username\":\"Username should contain at least 3 characters.\"");
 				else
 				{
-					isNewUser = helper.findUserbyUsername(username) == null;
-					System.out.println(isNewUser);
-					
-					jsonResponse = isNewUser ? jsonResponse.concat("") : jsonResponse.concat("\"username\":\"Username is already taken\"");
+					isGoodUser = helper.findUserbyUsername(username) == null;
+					jsonResponse = isGoodUser ? jsonResponse.concat("\"username\":\"yes\"") : jsonResponse.concat("\"username\":\"Username is already taken\"");
+				}
+			}
+			
+			if(email != null)
+			{
+				String cleanEmail = Jsoup.clean(email, Whitelist.basic());
+				if(!cleanEmail.equals(email))
+					jsonResponse = jsonResponse.concat("\"email\":\"Invalid email.\"");
+				else
+				{
+					isGoodEmail = true;
+					jsonResponse = jsonResponse.concat("\"email\":\"yes\"");
 				}
 			}
 			
 			if(password != null)
 			{
 				isGoodPassword = true;
+				jsonResponse = jsonResponse.concat("\"password\":\"yes\"");
 			}
 			
-			if(isNewUser && isGoodPassword)
+			if(isGoodUser && isGoodPassword && isGoodEmail)
 			{
 				String salt = new RandomStringGenerator().generateRandomString(5);
 				PasswordEncryptor pe = new PasswordEncryptor();
