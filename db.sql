@@ -30,7 +30,7 @@ CREATE TABLE `carts` (
   `productname` varchar(45) NOT NULL,
   `quantity` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,33 +39,7 @@ CREATE TABLE `carts` (
 
 LOCK TABLES `carts` WRITE;
 /*!40000 ALTER TABLE `carts` DISABLE KEYS */;
-INSERT INTO `carts` VALUES (1,'admin','Black Neck Tie',1);
 /*!40000 ALTER TABLE `carts` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `logs`
---
-
-DROP TABLE IF EXISTS `logs`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `logs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `log` varchar(120) NOT NULL,
-  `time` varchar(120) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `logs`
---
-
-LOCK TABLES `logs` WRITE;
-/*!40000 ALTER TABLE `logs` DISABLE KEYS */;
-INSERT INTO `logs` VALUES (1,'[POST] Login.java - Success - user User','Fri Apr 06 19:19:06 CST 2018'),(2,'[POST] Login.java - Success - productmanager Product Manager','Fri Apr 06 19:35:41 CST 2018'),(3,'[POST] AddProduct.java - Added product - productmanager Product Manager','Fri Apr 06 19:36:29 CST 2018');
-/*!40000 ALTER TABLE `logs` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -84,7 +58,7 @@ CREATE TABLE `products` (
   `image` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +67,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (2,'Red Neck Tie','A red neck tie.',50,126,'resources/rednecktie.jpg'),(3,'Blue Neck Tie','A blue neck tie.',75,75,'resources/bluenecktie.jpg'),(4,'Black Neck Tie','A black neck tie.',100,90,'resources/blacknecktie.jpg'),(5,'PUTANAMO','123',321,123,'resources/sublime_text.exe'),(6,'test','samp',10,5,'resources/sublime_text.exe');
+INSERT INTO `products` VALUES (2,'Red Neck Tie','A red neck tie.',50,126,'resources/rednecktie.jpg'),(3,'Blue Neck Tie','A blue neck tie.',75,75,'resources/bluenecktie.jpg'),(4,'Black Neck Tie','A black neck tie.',100,90,'resources/blacknecktie.jpg');
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,7 +84,7 @@ CREATE TABLE `purchases` (
   `productname` varchar(45) NOT NULL,
   `quantity` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -159,4 +133,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-09 19:06:41
+-- Dump completed on 2018-02-27 12:32:59
