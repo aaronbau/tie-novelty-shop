@@ -18,6 +18,7 @@ import org.jsoup.safety.Whitelist;
 import model.User;
 import security.PasswordEncryptor;
 import dbhelper.DBUtilities;
+import dbhelper.LogHelper;
 import dbhelper.UserHelper;
 
 /**
@@ -68,7 +69,12 @@ public class Login extends HttpServlet {
 					PasswordEncryptor pe = new PasswordEncryptor();
 					boolean passwordIsEqual = pe.checkPassword(password, u.getPassword(), u.getSalt());
 					
-					if(passwordIsEqual)
+					LogHelper lh = new LogHelper();
+					if(lh.checkBruteForceLogs("[POST] Login.java - Failed - " + u.getUsername()))
+					{
+						jsonResponse = jsonResponse.concat("\"invalid\":\"Account locked. Try again in 10 minutes.\"");
+					}
+					else if(passwordIsEqual)
 					{
 						session.setAttribute("username", u.getUsername());
 						session.setAttribute("usertype", u.getType());
