@@ -83,20 +83,45 @@ $(document).ready(function()
 			}
 		}).done(function(data)
 		{
+			console.log(data);
 			let jsonData = JSON.parse(data);
 			if("password" in jsonData)
 			{
 				if(jsonData.password == "yes")
 				{
 					passwordIsValid = true;
-					$(".error#password").html("");
 					checkValid();
 				}
-				else
+				
+				console.log(jsonData.strength);
+				
+				switch(jsonData.strength)
 				{
-					console.log(jsonData.password);
-					$(".error#password").html(jsonData.password);
-				}
+					case -1:
+						$(".error#password").html("Password must contain a lower-case letterUPPERCASE letter and a digit; minimum of 10 characters");
+						$(".error#password").css('color', '#ff5555');
+						break;
+					case 0:
+						$(".error#password").html("Password Strength: Weak");
+						$(".error#password").css('color', '#FFC655');
+						break;
+					case 1:
+						$(".error#password").html("Password Strength: Fair");
+						$(".error#password").css('color', '#BFBF11');
+						break;
+					case 2:
+						$(".error#password").html("Password Strength: Good");
+						$(".error#password").css('color', '#44CC44');
+						break;
+					case 3:
+						$(".error#password").html("Password Strength: Very Good");
+						$(".error#password").css('color', '#4564AB');
+						break;
+					case 4:
+						$(".error#password").html("Password Strength: Tough");
+						$(".error#password").css('color', '#843FAA');
+						break;
+				}		
 			}
 		});
 	});

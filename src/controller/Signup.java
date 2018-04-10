@@ -19,6 +19,7 @@ import dbhelper.DBUtilities;
 import dbhelper.UserHelper;
 import model.User;
 import security.PasswordEncryptor;
+import security.PasswordEstimator;
 import security.RandomStringGenerator;
 
 /**
@@ -91,8 +92,18 @@ public class Signup extends HttpServlet {
 			
 			if(password != null)
 			{
-				isGoodPassword = true;
-				jsonResponse = jsonResponse.concat("\"password\":\"yes\"");
+				PasswordEstimator pe = new PasswordEstimator();
+				int strength = pe.estimatePassword(password);
+				if(strength > 0)
+				{
+					isGoodPassword = true;
+					jsonResponse = jsonResponse.concat("\"password\":\"yes\",");
+				}
+				else
+					jsonResponse = jsonResponse.concat("\"password\":\"no\",");
+				
+				
+				jsonResponse = jsonResponse.concat("\"strength\":" + strength );
 			}
 			
 			if(isGoodUser && isGoodPassword && isGoodEmail)
