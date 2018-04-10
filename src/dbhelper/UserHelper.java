@@ -87,4 +87,32 @@ public class UserHelper {
     	
     	return null;
     }
+    
+    public void updatePassword(User u) throws SQLException {
+    	
+    	String query = "UPDATE users SET password = ?, salt = ? WHERE username = ?";
+    	
+    	Connection connection = dbUtil.getConnection();
+    	PreparedStatement preparedStatement = (PreparedStatement) connection.clientPrepareStatement(query);
+    	
+    	try {
+			preparedStatement.setString(1, u.getPassword());
+			preparedStatement.setString(2, u.getSalt());
+			preparedStatement.setString(3, u.getUsername());
+			
+			// execute insert SQL statement
+			preparedStatement.executeUpdate();			
+		} catch (SQLException e) {
+			System.out.println(e);
+		} finally {
+
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+
+			if (connection != null) {
+				connection.close();
+			}
+		}
+    }
 }

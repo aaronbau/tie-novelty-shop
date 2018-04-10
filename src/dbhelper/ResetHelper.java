@@ -55,42 +55,67 @@ private DBUtilities dbUtil;
 			}
 		}
     }
-    
-    public User invalidateReset(User u, String link) throws SQLException {
+	
+	public User findUserbyLink(String link) throws SQLException {
+		
+		String query = "SELECT * FROM reset WHERE link = ?";
     	
-//    	String query = "SELECT * FROM users WHERE username = ?";
-//    	
-//    	Connection connection = dbUtil.getConnection();
-//    	PreparedStatement preparedStatement = (PreparedStatement) connection.clientPrepareStatement(query);
-//    	
-//    	try {
-//			preparedStatement.setString(1, username);
-//
-//			// execute insert SQL statement
-//			ResultSet rs = preparedStatement.executeQuery();
-//			
-//			while(rs.next()) {
-//				return new User(rs.getString("username").toString(), 
-//								rs.getString("email").toString(), 
-//								rs.getString("password").toString(), 
-//								rs.getString("type").toString(),
-//								rs.getString("salt").toString());
-//			}
-//			
-//		} catch (SQLException e) {
-//			System.out.println(e);
-//		} finally {
-//
-//			if (preparedStatement != null) {
-//				preparedStatement.close();
-//			}
-//
-//			if (connection != null) {
-//				connection.close();
-//			}
-//		}
-//    	
+    	Connection connection = dbUtil.getConnection();
+    	PreparedStatement preparedStatement = (PreparedStatement) connection.clientPrepareStatement(query);
+    	
+    	try {
+			preparedStatement.setString(1, link);
+
+			// execute insert SQL statement
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			while(rs.next()) {
+				UserHelper uh = new UserHelper();
+				return uh.findUserbyUsername(rs.getString("username"));
+			}
+			
+		} catch (SQLException e) {
+			System.out.println(e);
+		} finally {
+
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+
+			if (connection != null) {
+				connection.close();
+			}
+		}
+    	
     	return null;
+	}
+    
+    public void invalidateReset(String link) throws SQLException {
+    	
+    	String query = "UPDATE reset SET valid = ? WHERE link = ?";
+    	
+    	Connection connection = dbUtil.getConnection();
+    	PreparedStatement preparedStatement = (PreparedStatement) connection.clientPrepareStatement(query);
+    	
+    	try {
+			preparedStatement.setInt(1, 0);
+			preparedStatement.setString(2, link);
+
+			// execute insert SQL statement
+			preparedStatement.executeUpdate();
+		
+		} catch (SQLException e) {
+			System.out.println(e);
+		} finally {
+
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+
+			if (connection != null) {
+				connection.close();
+			}
+		}
     }
     
     public boolean checkValidLink(String link) throws SQLException {
