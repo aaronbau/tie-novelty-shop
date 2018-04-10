@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `tie-novelty-shop` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `tie-novelty-shop`;
--- MySQL dump 10.13  Distrib 5.7.12, for Win32 (AMD64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: tie-novelty-shop
 -- ------------------------------------------------------
--- Server version	5.7.19-log
+-- Server version	5.7.21-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -30,7 +28,7 @@ CREATE TABLE `carts` (
   `productname` varchar(45) NOT NULL,
   `quantity` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -58,7 +56,7 @@ CREATE TABLE `products` (
   `image` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,7 +65,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (2,'Red Neck Tie','A red neck tie.',50,126,'resources/rednecktie.jpg'),(3,'Blue Neck Tie','A blue neck tie.',75,75,'resources/bluenecktie.jpg'),(4,'Black Neck Tie','A black neck tie.',100,90,'resources/blacknecktie.jpg');
+INSERT INTO `products` VALUES (1,'Red Neck Tie','Attraction. A charming red neck tie.',7,800,'resources/rednecktie.jpg');
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -84,7 +82,7 @@ CREATE TABLE `purchases` (
   `productname` varchar(45) NOT NULL,
   `quantity` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,8 +91,33 @@ CREATE TABLE `purchases` (
 
 LOCK TABLES `purchases` WRITE;
 /*!40000 ALTER TABLE `purchases` DISABLE KEYS */;
-INSERT INTO `purchases` VALUES (2,'user','Black Neck Tie','4'),(4,'user2','Black Neck Tie','7'),(5,'user2','Blue Neck Tie','3'),(7,'user','Blue Neck Tie','1');
+INSERT INTO `purchases` VALUES (1,'username','Red Neck Tie','3');
 /*!40000 ALTER TABLE `purchases` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `reset`
+--
+
+DROP TABLE IF EXISTS `reset`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `reset` (
+  `username` varchar(120) NOT NULL,
+  `link` varchar(120) NOT NULL,
+  `date` datetime NOT NULL,
+  `valid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `reset`
+--
+
+LOCK TABLES `reset` WRITE;
+/*!40000 ALTER TABLE `reset` DISABLE KEYS */;
+INSERT INTO `reset` VALUES ('user','IXL6ZHUCN79WZX86N25NN62E06VFYDLC0TRYXJ4NWNPCSW0CJXAJ12T1L6ENANSJ11UQU23OG9AK3FFAIU3CTU3PU73T71H8OFYJSUGZU3PSS8EY9D4VT3O2','2018-04-09 16:04:14',1);
+/*!40000 ALTER TABLE `reset` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -107,11 +130,12 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
+  `password` varchar(120) NOT NULL,
   `email` varchar(45) NOT NULL,
   `type` varchar(45) NOT NULL,
+  `salt` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -120,7 +144,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (8,'admin','1234','admin@tie.com','Administrator'),(9,'user','1234','user@tie.com','User'),(10,'productmanager','1234','productmanager@tie.com','Product Manager'),(11,'productmanager2','1234','productmanager2@tie.com','Product Manager'),(12,'user2','1234','user2@tie.com','User'),(13,'','','','Product Manager'),(14,'','','','Product Manager'),(15,'','','','Product Manager'),(16,'productmanager3','1234','productmanager3@tie.com','Product Manager'),(17,'productmanager4','1234','productmanager4@tie.com','Product Manager'),(18,'productmanager5','1234','productmanager5@tie.com','Product Manager'),(19,'productmanager6','1234','productmanager6@tie.com','Product Manager'),(20,'productmanager7','1234','productmanager7@tie.com','Product Manager'),(21,'admin2','1234','admin2@tie.com','Administrator');
+INSERT INTO `users` VALUES (5,'user','GS2OAjUjS9kODR6TbNFcuftPg/kTXAn6RUCbAVR5l9R1FHOAUFqSWW7IMBx6LhZz/j3iSsBvtXQ7rb1KVyrfxQ==','yes@yes.com','User','2WHJT'),(6,'username','PJe71rWzFytond9Gc298UzG0Bu4OyI/YoC8+aWncflJ4yE7qUufe3CWNZnirMssMvXLVEk/O+UeQsUjqoZpabQ==','yes@yes.com','User','UFG4E');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -133,4 +157,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-27 12:32:59
+-- Dump completed on 2018-04-10 17:24:17
