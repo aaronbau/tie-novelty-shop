@@ -6,7 +6,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Create Product Manager</title>
 <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+<script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/script.js"></script>
+<script src="js/pm.js"></script>
+
 </head>
 <body>
 <%
@@ -16,22 +19,27 @@
 <%@ include file="components/navbar.jsp" %>
 <a style="font-size: .80em;" href="AdminControls">back to Admin Controls</a>
 <h1 style="font-size: 2em;">Create Product Manager</h1>
-<br>
-	<form method="POST">
-		Username
-		<br>
-		<input type="text" name="username" required/> 
-		<br>
-		Password
-		<br>
-		<input type="password" name="password" required/>
-		<br>		
-		Email
-		<br>
-		<input type="email" name="email" required/>
-		<br>
-		<br>
-		<input type="submit" value="Create"/>
-	</form>
+<br>	
+		<form method="POST">
+			<label for="username">Username</label>
+			<br> 
+			<input type="text" id="pm-username" name="username" required/> 
+			<br>
+			<div class="error" id="pm-username-error"> </div>
+			<br>
+			<label for="password">Password</label>
+			<br>
+			<input type="password" id="pm-password" name="password" required/>
+			<br>
+			<div class="error" id="pm-password-error"> </div>
+			<br>
+			<label for="email">Email</label>
+			<br>
+			<input type="email" id="pm-email" name="email" required/>
+			<br>
+			<div class="error" id="pm-email-error"> </div>
+			<br>
+			<input type="submit" id="pm-submit" value="Create Product Manager" disabled=true>
+		</form>
 </body>
 </html>

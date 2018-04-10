@@ -19,19 +19,19 @@
 			<br> 
 			<input type="text" id="signup-username" name="username" required/> 
 			<br>
-			<div class="error" id="username"> </div>
+			<div class="error" id="signup-username-error"> </div>
 			<br>
 			<label for="password">Password</label>
 			<br>
 			<input type="password" id="signup-password" name="password" required/>
 			<br>
-			<div class="error" id="password"> </div>
+			<div class="error" id="signup-password-error"> </div>
 			<br>
 			<label for="email">Email</label>
 			<br>
 			<input type="email" id="signup-email" name="email" required/>
 			<br>
-			<div class="error" id="email"> </div>
+			<div class="error" id="signup-email-error"> </div>
 			<br>
 			<input type="submit" id="signup-submit" value="Sign-up" disabled=true>
 		</form>

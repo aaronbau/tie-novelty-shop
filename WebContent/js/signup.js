@@ -1,11 +1,11 @@
-var usernameIsValid = false;
-var passwordIsValid = false;
-var emailIsValid = false;
+let usernameIsValid_S = false;
+let passwordIsValid_S = false;
+let emailIsValid_S = false;
 
-function checkValid()
+function checkSignupValid()
 {
-	console.log(usernameIsValid + " " + passwordIsValid + " " + emailIsValid);
-	if(usernameIsValid && emailIsValid && passwordIsValid)
+	console.log(usernameIsValid_S + " " + passwordIsValid_S + " " + emailIsValid_S);
+	if(usernameIsValid_S && emailIsValid_S && passwordIsValid_S)
 	{
 		$('#signup-submit').prop('disabled', false);
 	}
@@ -29,14 +29,14 @@ $(document).ready(function()
 			{
 				if(jsonData.username == "yes")
 				{
-					usernameIsValid = true;
-					$(".error#username").html("");
-					checkValid();
+					usernameIsValid_S = true;
+					$(".error#signup-username-error").html("");
+					checkSignupValid();
 				}
 				else
 				{
 					console.log(jsonData.username);
-					$(".error#username").html(jsonData.username);
+					$(".error#signup-username-error").html(jsonData.username);
 				}
 			}
 		});
@@ -59,14 +59,14 @@ $(document).ready(function()
 				console.log(jsonData.email);
 				if(jsonData.email == "yes")
 				{
-					emailIsValid = true;
-					$(".error#email").html("");
-					checkValid();
+					emailIsValid_S = true;
+					$(".error#signup-email-error").html("");
+					checkSignupValid();
 				}
 				else
 				{
 					console.log(jsonData.email);
-					$(".error#email").html(jsonData.email);
+					$(".error#signup-email-error").html(jsonData.email);
 				}
 			}
 		});
@@ -89,8 +89,8 @@ $(document).ready(function()
 			{
 				if(jsonData.password == "yes")
 				{
-					passwordIsValid = true;
-					checkValid();
+					passwordIsValid_S = true;
+					checkSignupValid();
 				}
 				
 				console.log(jsonData.strength);
@@ -98,28 +98,28 @@ $(document).ready(function()
 				switch(jsonData.strength)
 				{
 					case -1:
-						$(".error#password").html("Password must contain a lower-case letterUPPERCASE letter and a digit; minimum of 10 characters");
-						$(".error#password").css('color', '#ff5555');
+						$(".error#signup-password-error").html("Password must contain a lower-case letter, an UPPERCASE letter and a digit; minimum of 10 characters");
+						$(".error#signup-password-error").css('color', '#ff5555');
 						break;
 					case 0:
-						$(".error#password").html("Password Strength: Weak");
-						$(".error#password").css('color', '#FFC655');
+						$(".error#signup-password-error").html("Password Strength: Weak");
+						$(".error#signup-password-error").css('color', '#FFC655');
 						break;
 					case 1:
-						$(".error#password").html("Password Strength: Fair");
-						$(".error#password").css('color', '#BFBF11');
+						$(".error#signup-password-error").html("Password Strength: Fair");
+						$(".error#signup-password-error").css('color', '#BFBF11');
 						break;
 					case 2:
-						$(".error#password").html("Password Strength: Good");
-						$(".error#password").css('color', '#44CC44');
+						$(".error#signup-password-error").html("Password Strength: Good");
+						$(".error#signup-password-error").css('color', '#44CC44');
 						break;
 					case 3:
-						$(".error#password").html("Password Strength: Very Good");
-						$(".error#password").css('color', '#4564AB');
+						$(".error#signup-password-error").html("Password Strength: Very Good");
+						$(".error#signup-password-error").css('color', '#4564AB');
 						break;
 					case 4:
-						$(".error#password").html("Password Strength: Tough");
-						$(".error#password").css('color', '#843FAA');
+						$(".error#signup-password-error").html("Password Strength: Excellent");
+						$(".error#signup-password-error").css('color', '#843FAA');
 						break;
 				}		
 			}

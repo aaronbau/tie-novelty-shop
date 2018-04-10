@@ -6,7 +6,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Create Administrator</title>
 <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+<script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/script.js"></script>
+<script src="js/createadmin.js"></script>
 </head>
 <body>
 <%
@@ -17,7 +19,7 @@
 <a style="font-size: .80em;" href="AdminControls">back to Admin Controls</a>
 <h1 style="font-size: 2em;">Create Administrator</h1>
 <br>
-	<form method="POST">
+<!--	<form method="POST">
 		Username
 		<br>
 		<input type="text" name="username" /> <br>
@@ -30,6 +32,27 @@
 		<br>
 		<br>
 		<input type="submit" value="Create"/>
-	</form>
+	</form> -->
+	<form method="POST">
+			<label for="username">Username</label>
+			<br> 
+			<input type="text" id="admin-username" name="username" required/> 
+			<br>
+			<div class="error" id="admin-username-error"> </div>
+			<br>
+			<label for="password">Password</label>
+			<br>
+			<input type="password" id="admin-password" name="password" required/>
+			<br>
+			<div class="error" id="admin-password-error"> </div>
+			<br>
+			<label for="email">Email</label>
+			<br>
+			<input type="email" id="admin-email" name="email" required/>
+			<br>
+			<div class="error" id="admin-email-error"> </div>
+			<br>
+			<input type="submit" id="admin-submit" value="Create Administrator" disabled=true>
+		</form>
 </body>
 </html>
