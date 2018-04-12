@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dbhelper.DBUtilities;
+import dbhelper.LogHelper;
 import dbhelper.ResetHelper;
 import dbhelper.UserHelper;
 import model.User;
@@ -64,6 +67,8 @@ public class ResetFromEmail extends HttpServlet {
 		UserHelper uh = new UserHelper();
 		ResetHelper rh = new ResetHelper();
 		String jsonResponse = "{";
+		
+		DBUtilities db = new DBUtilities();
 				
 		boolean isCorrectPassword = false;
 		boolean isGoodPassword = false;
@@ -73,14 +78,25 @@ public class ResetFromEmail extends HttpServlet {
 			
 			if(currPassword != null)
 			{
-				PasswordEncryptor pe = new PasswordEncryptor();
-				if(pe.checkPassword(currPassword, u.getPassword(), u.getSalt()))
+				LogHelper lh = new LogHelper();
+				if(lh.checkBruteForceLogs("[POST] ResetFromEmail.java - Recovery Falied - " + u.getUsername()))
 				{
-					jsonResponse = jsonResponse.concat("\"currpass\":\"yes\",");
-					isCorrectPassword = true;
+					jsonResponse = jsonResponse.concat("\"currpass\":\"Account locked. Try again in 10 minutes.\",");
 				}
 				else
-					jsonResponse = jsonResponse.concat("\"currpass\":\"Incorrect password.\",");
+				{
+					PasswordEncryptor pe = new PasswordEncryptor();
+					if(pe.checkPassword(currPassword, u.getPassword(), u.getSalt()))
+					{
+						jsonResponse = jsonResponse.concat("\"currpass\":\"yes\",");
+						isCorrectPassword = true;
+					}
+					else
+					{
+						jsonResponse = jsonResponse.concat("\"currpass\":\"Incorrect password.\",");
+						db.writeLog("[POST] ResetFromEmail.java - Recovery Failed - " + u.getUsername()  + " " + u.getType(), new Date());
+					}
+				}					
 			}
 			
 			if(newPassword != null)
@@ -114,7 +130,9 @@ public class ResetFromEmail extends HttpServlet {
 				uh.updatePassword(u);
 				
 				jsonResponse = jsonResponse.concat(",\"success\":\"yes\"");
+				db.writeLog("[POST] ResetFromEmail.java - Recovery Success - " + u.getUsername()  + " " + u.getType(), new Date());
 			}
+			
 			
 			response.getWriter().write(jsonResponse + "}");
 		} catch(SQLException e) {

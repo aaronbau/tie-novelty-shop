@@ -35,11 +35,9 @@ public class LogHelper {
 			int ctr = 0;
 			while(rs.next() && ctr < 10)
 			{
-				System.out.println("WENT HERE");
 				SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
 				try
 				{
-					System.out.println(sdf.parse(rs.getString("time")));
 					dateArr.add(sdf.parse(rs.getString("time")));
 				}
 				catch(ParseException pe)
@@ -53,7 +51,7 @@ public class LogHelper {
 			if(!(dateArr.size() < 10))
 			{
 				Date compareDate = new Date();
-				compareDate.setTime(compareDate.getTime() - 10);
+				compareDate.setTime(compareDate.getTime() - 600000);
 				
 				for(Date d : dateArr)
 				{
