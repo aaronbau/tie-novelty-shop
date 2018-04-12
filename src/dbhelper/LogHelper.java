@@ -58,7 +58,9 @@ public class LogHelper {
 					if(!d.after(compareDate))
 						return false;
 				}
-			}			
+			}
+			else
+				return false;
 
 		} catch (SQLException e) {
 
